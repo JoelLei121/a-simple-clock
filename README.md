@@ -2,7 +2,7 @@
 thu frontend summer course project.
 
 ### requirements
-use `npm install react react-dom next use-immer` to install react, react-dom, next.js and use-immer.
+use `npm install` to install dependencies. We use react, react-dom, next.js and use-immer.
 
 
 ### dev environment setup
