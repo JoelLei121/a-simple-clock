@@ -37,5 +37,5 @@ export default function BasicClock({ time, initTime={ hour: 0, minute: 0, second
 }
 
 const decoration = (i) => {
-    return <line x1='100' y1='30' x2='100' y2='40' style={{stroke: "#ffffff"}} transform={`rotate(${i * 30} 100 100)`}></line>
+    return <line x1='100' y1='30' x2='100' y2='40' style={{stroke: "#ffffff"}} transform={`rotate(${i * 30} 100 100)`} key={i}></line>
 }
