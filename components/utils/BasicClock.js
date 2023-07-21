@@ -20,11 +20,11 @@ export default function BasicClock({ time, initTime={ hour: 0, minute: 0, second
                 <circle id="circle" style={{stroke: "#FFF", strokeWidth: "12px", fill:"#20B7AF"}} cx="100" cy="100" r="80"></circle>
             </g>
             <g>
-                <line x1="100" y1="100" x2="100" y2="55" transform={`rotate(${initTime.hour + hour*15} 100 100)`} style={{strokeWidth: "3px", stroke: "#fffbf9"}} id="hourhand">
+                <line x1="100" y1="100" x2="100" y2="55" transform={`rotate(${(initTime.hour + hour)*15} 100 100)`} style={{strokeWidth: "3px", stroke: "#fffbf9"}} id="hourhand">
                 </line>
-                <line x1="100" y1="100" x2="100" y2="40" transform={`rotate(${initTime.minute + minute*6} 100 100)`} style={{strokeWidth: "4px", stroke: "#fdfdfd"}} id="minutehand">
+                <line x1="100" y1="100" x2="100" y2="40" transform={`rotate(${(initTime.minute + minute)*6} 100 100)`} style={{strokeWidth: "4px", stroke: "#fdfdfd"}} id="minutehand">
                 </line>
-                <line x1="100" y1="100" x2="100" y2="30" transform={`rotate(${initTime.second + second*6} 100 100)`} style={{strokeWidth: "2px", stroke: "#C1EFED"}} id="secondhand">
+                <line x1="100" y1="100" x2="100" y2="30" transform={`rotate(${(initTime.second + second)*6} 100 100)`} style={{strokeWidth: "2px", stroke: "#C1EFED"}} id="secondhand">
                 </line>
             </g>
             <circle id="center" style={{fill:"#128A86", stroke: "#C1EFED", strokeWidth: "2px"}} cx="100" cy="100" r="3"></circle>
