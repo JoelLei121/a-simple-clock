@@ -2,7 +2,7 @@
 
 export default function FloatingButton({style, handleClick}) {
 
-    const radius = 25;
+    const radius = 40;
     return (
         <svg width={radius*2} height={radius*2} style={{...style, position: "absolute", zIndex: 10}} onClick={handleClick}>        
             <g>

@@ -1,0 +1,13 @@
+.disable {
+    fill: rgba(0, 0, 0, 0);
+}
+
+.dump {
+    fill: rgba(0, 0, 0, 1);
+}
+
+.DigitalClock {
+    height: fit-content;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}

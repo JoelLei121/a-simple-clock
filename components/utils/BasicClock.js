@@ -2,7 +2,7 @@ export default function BasicClock({ props }) {
 
     let data = {...props};
     if(!('initTime' in data)) {
-        data.initTime = { hour: 0, minute: 0, second: 0};
+        data.initTime = { hour: 0, minute: 0, second: 0 };
     }
     if(!('scale' in data)) {
         data.scale = 1;
