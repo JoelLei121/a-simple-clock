@@ -1,21 +1,16 @@
 import '../styles/global.css';
 // import { SampleContext } from '../contexts/SampleContext';
-import { CurrentTimeContext  } from '../contexts/CurrentTimeContext';
+import { CurrentStateContext  } from '../contexts/GlobalContext';
 import { useState } from 'react';
 
 export default function App({ Component, pageProps}) {
-    const [sampleData, setSampleData] = useState({
-        message: 'Hello, world!'
-    });
-    const [currentTime, setCurrentTime] = useState({ hour: 0, minute: 0, second: 0 })
+    const [currentState, setCurrentState] = useState('NORMAL');
 
     return (
         <>
-            <CurrentTimeContext.Provider value={{ currentTime, setCurrentTime }}>
-                {/* <SampleContext.Provider value={{ sampleData, setSampleData }}> */}
+            <CurrentStateContext.Provider value={{ currentState, setCurrentState }}>
                 <Component {...pageProps}/>
-                {/* </SampleContext.Provider> */}
-            </CurrentTimeContext.Provider>
+            </CurrentStateContext.Provider>
         </>
     );
 }

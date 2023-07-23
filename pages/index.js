@@ -5,31 +5,36 @@ import FloatingButton from "../components/FloatingButton";
 import ClockList from "../components/ClockList";
 
 import { useContext } from "react";
-import { SampleContext } from "../contexts/SampleContext";
-import { CurrentTimeContext } from "../contexts/CurrentTimeContext";
+import { CurrentStateContext } from "../contexts/GlobalContext";
 import DigitalClock from "../components/DigitalClock";
 import StopWatch from "../components/StopWatch";
 
 
 export default function HomePage() {
-    const context = useContext(SampleContext);
-    const sampleData = context.sampleData;
+    const context = useContext(CurrentStateContext);
+    const currentState = context.currentState;
 
-    const initTime = { hour: 0, minute: 5, second: 30 };
+    const mainClockScale = currentState === 'NORMAL' ? 2 : 0.5;
+    const mainClockPosition = currentState === 'NORMAL' ? 
+        {position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"} : 
+        {position: "absolute", right: "60px", top: "40px"};
 
     return (
         <>
             <div style={{width: "100%", height: "100%"}}>
-                {/* <SampleComponent message={sampleData.message}/> */}
-                {/* <AutoClock reverse={true} initTime={initTime}/>
-                <AutoClock reverse={true}/> */}
-                <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-                    {/* BUG: Stop counting when alert, which means setInterval is not safe */}
-                    {/* <AutoClock scale={2}/>  */}
-                    <StopWatch />
+                {/* normal clock */}
+                <div style={...mainClockPosition}>
+                    <AutoClock scale={mainClockScale} /> 
                 </div>
+
+                {/* stop watch */}
+                {
+                    currentState === 'STOPWATCH' &&
+                    <StopWatch scale={2}/>
+                }
+                
             </div>
-            <FloatingButton style={{right: '24px', bottom: '24px'}} handleClick={() => { alert("click!"); }}/>
+            <FloatingButton style={{right: '24px', bottom: '24px'}} />
             {/* <ClockList>
                 <AutoClock scale={1.2}/>
                 <AutoClock scale={0.6}/>

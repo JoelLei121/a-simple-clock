@@ -32,7 +32,7 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
                 <ReverseClock props={{time: time, initTime: initTime, scale: scale}}/> : 
                 <BasicClock props={{time: time, initTime: initTime, scale: scale}}/>
             }
-            <DigitalClock time={time}/>
+            <DigitalClock time={time} scale={scale}/>
         </div>
     )
 }

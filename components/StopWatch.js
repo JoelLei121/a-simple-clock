@@ -3,7 +3,7 @@ import styles from "../styles/StopWatch.module.css";
 import ControlClock from "./utils/ControlClock";
 
 var intervalId = null;
-export default function StopWatch() {
+export default function StopWatch({ scale=1 }) {
     const [status, setStatue] = useState('setting');
     const [recordList, setRecordList] = useState([]);
 
@@ -65,7 +65,7 @@ export default function StopWatch() {
 
     return (
         <div className={styles.StopWatch}>
-            <ControlClock time={time}/>
+            <ControlClock time={time} scale={scale}/>
             <ButtonSet status={status} methods={
                 {start: handleStart, stop: handleStop, continue: handleContinue, reset: handleReset, record: handleRecord}
             }/>
@@ -94,7 +94,7 @@ function ButtonSet({status, methods}) {
             }
             {
                 status != 'setting' &&
-                <button className={styles.button} disabled={status != 'stopped'} onClick={methods.reset}>Reset</button>
+                <button className={styles.button} onClick={methods.reset}>Reset</button>
             }
             {
                 status != 'setting' && 
