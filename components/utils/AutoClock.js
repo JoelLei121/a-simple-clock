@@ -6,10 +6,7 @@ import DigitalClock from "../DigitalClock";
 var intervalId;
 export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0, second: 0}, scale=1 }) {
     const [counting, setCounting] = useState(0);
-    const [second, setSecond] = useState(0);
-    const [minute, setMinute] = useState(0);
-    const [hour, setHour] = useState(0);
-    let time = { hour: hour, minute: minute, second: second };
+    const [time, setTime] = useState({ hour: 0, minute: 0, second: 0 });
 
     function incPerSec() {
         setCounting(s => (s + 1 + 86400) % 86400);
@@ -19,17 +16,12 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
         intervalId = setInterval(incPerSec, 1000);
         /* BUG: Stop counting when alert, which means setInterval is not safe */
     }, []);
-
-
     useEffect(() => {
-        setSecond((counting % 60));
-    }, [counting])
-    useEffect(() => {
-        setMinute((counting / 60));
-    }, [counting]);
-
-    useEffect(() => {
-        setHour((counting / 3600));
+        setTime({
+            hour: counting / 3600,
+            minute: counting / 60,
+            second: counting % 60
+        })
     }, [counting]);
 
 

@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { SampleContext } from "../contexts/SampleContext";
 import { CurrentTimeContext } from "../contexts/CurrentTimeContext";
 import DigitalClock from "../components/DigitalClock";
+import StopWatch from "../components/StopWatch";
 
 
 export default function HomePage() {
@@ -23,7 +24,9 @@ export default function HomePage() {
                 {/* <AutoClock reverse={true} initTime={initTime}/>
                 <AutoClock reverse={true}/> */}
                 <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-                    <AutoClock scale={2}/> {/* BUG: Stop counting when alert, which means setInterval is not safe */}
+                    {/* BUG: Stop counting when alert, which means setInterval is not safe */}
+                    {/* <AutoClock scale={2}/>  */}
+                    <StopWatch />
                 </div>
             </div>
             <FloatingButton style={{right: '24px', bottom: '24px'}} handleClick={() => { alert("click!"); }}/>
