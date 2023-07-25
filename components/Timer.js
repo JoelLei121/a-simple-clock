@@ -98,7 +98,7 @@ function ButtonSet({status, methods}) {
             }   
             {
                 status === 'alarm' && 
-                <button className={styles.button} onClick={methods.stopAlarm}>Turn On Alarm</button>
+                <button className={styles.button} onClick={methods.stopAlarm}>Turn Off Alarm</button>
             }     
         </div>
     )
