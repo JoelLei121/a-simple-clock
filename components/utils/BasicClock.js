@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export default function BasicClock({ props }) {
 
     let data = {...props};
@@ -11,6 +13,7 @@ export default function BasicClock({ props }) {
         throw Error("Time attribute required");
     }
     // transform={`scale(${data.scale})`}
+
     return (
         <div style={{width: `${200*data.scale}px`, height: `${200*data.scale}px` }}>
             <svg width='100%' height='100%' viewBox="0 0 200 200" >

@@ -28,3 +28,4 @@ dev: `npm run dev`
 
 ### reference
 https://yqnn.github.io/svg-path-editor/
+https://www.w3schools.com/howto/howto_css_switch.asp

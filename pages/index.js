@@ -2,17 +2,20 @@ import SampleComponent from "../components/sample";
 import BasicClock from "../components/utils/BasicClock";
 import AutoClock from "../components/utils/AutoClock";
 import FloatingButton from "../components/FloatingButton";
-import ClockList from "../components/ClockList";
+import AlarmList from "../components/AlarmList";
 
 import { useContext } from "react";
-import { CurrentStateContext } from "../contexts/GlobalContext";
+import { CurrentStateContext, CurrentTimeContext } from "../contexts/GlobalContext";
 import DigitalClock from "../components/DigitalClock";
 import StopWatch from "../components/StopWatch";
 
 
 export default function HomePage() {
-    const context = useContext(CurrentStateContext);
-    const currentState = context.currentState;
+    const stateContext = useContext(CurrentStateContext);
+    const currentState = stateContext.currentState;
+
+    const timeContext = useContext(CurrentTimeContext);
+    const initTime = timeContext.currentTime;
 
     const mainClockScale = currentState === 'NORMAL' ? 2 : 0.5;
     const mainClockPosition = currentState === 'NORMAL' ? 
@@ -24,7 +27,7 @@ export default function HomePage() {
             <div style={{width: "100%", height: "100%"}}>
                 {/* normal clock */}
                 <div style={...mainClockPosition}>
-                    <AutoClock scale={mainClockScale} /> 
+                    <AutoClock scale={mainClockScale} initTime={initTime}/> 
                 </div>
 
                 {/* stop watch */}
@@ -35,13 +38,7 @@ export default function HomePage() {
                 
             </div>
             <FloatingButton style={{right: '24px', bottom: '24px'}} />
-            {/* <ClockList>
-                <AutoClock scale={1.2}/>
-                <AutoClock scale={0.6}/>
-                <AutoClock scale={0.3}/>
-                <AutoClock scale={1}/>
-                
-            </ClockList> */}
+            <AlarmList />
         </>
     )
 }

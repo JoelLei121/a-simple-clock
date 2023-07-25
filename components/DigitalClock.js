@@ -1,7 +1,7 @@
 import styles from "../styles/DigitalClock.module.css";
+import { useEffect } from "react";
 
 export default function DigitalClock({ time={ hour: 0, minute: 0, second: 0 }, scale=1 }) {
-
     return (
         <svg viewBox="0 0 63 13" width={`${150*scale}px`} height="auto" className={styles.DigitalClock}>
             <Digital x={0} value={Math.floor(time.hour / 10)} />
