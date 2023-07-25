@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/Timer.module.css";
 import ControlClock from "./utils/ControlClock";
+import Alarm from "./utils/Alarm";
 
 
 var intervalId = null;
 export default function Timer({ scale=1 }) {
-    const [status, setStatue] = useState('stopped');
+    const [status, setStatue] = useState('stopped'); //['stopped', 'running', 'suspended', 'alarm']
     const [counting, setCounting] = useState(0);
-    const [completion, setCompletion] = useState(true);
+    const [alarmOff, setAlarmOff] = useState(true); //alarm never work or has been closed
     const [time, setTime] = useState({ hour: 0, minute: 0, second: 0 });
 
     function decPerSec() {
@@ -35,25 +36,20 @@ export default function Timer({ scale=1 }) {
         })
 
         if(counting === 0){
-
-            setStatue('stopped');
-        
-            /* TODO: time up */
-            if(!completion){
-                setCompletion(true);
-                console.log('timer finished');
-            }
+            if(alarmOff){setStatue("stopped");}
+            else{setStatue("alarm")}
         }
     }, [counting])
 
     function handleStart() {
         /* TODO: set timer with clock or digital clock */
         setCounting(3);
-        setCompletion(false);
+        setAlarmOff(false);
         setStatue('running');
     }
     function handleStop() {
         setCounting(0);
+        setAlarmOff(true);
         setStatue('stopped');
     }
     function handleSuspend() {
@@ -62,12 +58,18 @@ export default function Timer({ scale=1 }) {
     function handleContinue() {
         setStatue('running');
     }
+    function handleStopAlarm() {
+        setAlarmOff(true);
+        setStatue('stopped');
+    }
+
 
     return (
         <div className={styles.Timer}>
+            <Alarm url="http://streaming.tdiradio.com:8000/house.mp3" status={status}/>
             <ControlClock time={time} scale={scale}/>
             <ButtonSet status={status} methods={
-                {start: handleStart, stop: handleStop, continue: handleContinue, suspend: handleSuspend}
+                {start: handleStart, stop: handleStop, continue: handleContinue, suspend: handleSuspend, stopAlarm: handleStopAlarm}
             }/>
         </div>
     )
@@ -83,7 +85,7 @@ function ButtonSet({status, methods}) {
                 <button className={styles.button} onClick={methods.start}>Start</button>
             }
             {
-                status != 'stopped' && 
+                (status === 'running' || status === 'suspended') &&
                 <button className={styles.button} onClick={methods.stop}>Stop</button>
             }
             {
@@ -93,7 +95,11 @@ function ButtonSet({status, methods}) {
             {
                 status === 'suspended' && 
                 <button className={styles.button} onClick={methods.continue}>Continue</button>
-            }       
+            }   
+            {
+                status === 'alarm' && 
+                <button className={styles.button} onClick={methods.stopAlarm}>Turn On Alarm</button>
+            }     
         </div>
     )
 }
