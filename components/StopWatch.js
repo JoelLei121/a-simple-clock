@@ -110,7 +110,7 @@ function RecordList({recordList}) {
         <div className={styles.recordList}>
             {
                 recordList.map((item) => {
-                    return <Record index={item.index} time={item.time} />
+                    return <Record key={item.index} index={item.index} time={item.time} />
                 })
             }
         </div>

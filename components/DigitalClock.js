@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 export default function DigitalClock({ time={ hour: 0, minute: 0, second: 0 }, scale=1 }) {
     return (
-        <svg viewBox="0 0 63 13" width={`${150*scale}px`} height="auto" className={styles.DigitalClock}>
+        <svg viewBox="0 0 63 13" width={`${150*scale}px`} className={styles.DigitalClock}>
             <Digital x={0} value={Math.floor(time.hour / 10)} />
             <Digital x={10} value={Math.floor(time.hour % 10)} />
             <Dots x={20}/>

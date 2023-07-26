@@ -1,18 +1,23 @@
 import '../styles/global.css';
-// import { SampleContext } from '../contexts/SampleContext';
 import { CurrentStateContext, CurrentTimeContext  } from '../contexts/GlobalContext';
 import { useState } from 'react';
 
 export default function App({ Component, pageProps}) {
     const [currentState, setCurrentState] = useState('NORMAL');
-    // get time from Date
-    let d = new Date();
+
+    /* something goes wrong with Date */
+    // let d = new Date();
+    // let initTime = {
+    //     hour: d.getHours(),
+    //     minute: d.getMinutes(),
+    //     second: d.getSeconds()
+    // }
+
     let initTime = {
-        hour: d.getHours(),
-        minute: d.getMinutes(),
-        second: d.getSeconds()
+        hour: 0,
+        minute: 0,
+        second: 0
     }
-    // console.log(initTime)
     const [currentTime, setCurrentTime] = useState(initTime);
 
     return (
