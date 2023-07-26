@@ -9,38 +9,35 @@ import { CurrentStateContext } from "../../contexts/GlobalContext";
 
 var intervalId;
 export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0, second: 0}, scale=1 }) {
-    const [counting, setCounting] = useState(0);
-    const [time, setTime] = useState(initTime);
+    const [initStamp, setInitStamp] = useState(initTime.hour * 3600 + initTime.minute * 60 + initTime.second);
+    const [stakeStamp, setStakeStamp] = useState(Math.floor(performance.now()));
+    const [timeStamp, setTimeStamp] = useState(0);
+
     const [modify,setModify] = useState(false);
     const [showChange,setShowChange] = useState(false);
     const timeContext = useContext(CurrentTimeContext);
     const stateContext = useContext(CurrentStateContext);
     const currentState = stateContext.currentState;
+    const currentTime = timeContext.currentTime;
 
-    function incPerSec() {
-        setCounting(s => (s + 1 + 86400) % 86400);
-    }
 
     useEffect(() => {
-        setCounting(time.hour * 3600 + time.minute * 60 + time.second)
-        intervalId = setInterval(incPerSec, 1000);
-        /* BUG: Stop counting when alert, which means setInterval is not safe */
-        return () => {
-            clearInterval(intervalId);
-        }
-    }, []);
-    useEffect(() => {
-        setTime({
-            hour: Math.floor(counting / 3600),
-            minute: Math.floor((counting / 60) % 60),
-            second: counting % 60
-        })
-    }, [counting]);
-
-    useEffect(() => {
-        // console.log(time)
+        let stampSecond=timeStamp/1000;
+        let time={hour: Math.floor(stampSecond/3600), minute: Math.floor(stampSecond/60)%60, second: stampSecond%60};
         timeContext.setCurrentTime(time);
-    }, [time]);
+    }, [timeStamp]);
+
+
+    useEffect(()=>{
+        runTime();
+    },[])
+
+    function runTime(){
+        let now = Math.floor(performance.now());
+        let time = (now - stakeStamp+ initStamp)%86400000;
+        // setTimeStamp(time);
+        requestAnimationFrame(runTime);
+    }
 
     function handleCancel(){
         setModify(false)
@@ -65,12 +62,12 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
                 { 
                     reverse ? 
                     <ReverseClock props={{time: time, scale: scale}}/> : 
-                    <BasicClock props={{time: time, scale: scale}}/>
+                    <BasicClock props={{timeStamp:timeStamp, scale: scale}}/>
                 }{
                     modify && <button style={{height:"30px",width:"160px",fontSize:"medium",borderRadius:"5px",backgroundColor:"#00d5ff",margin:"0 0 10px 0",color:"#ffffff",borderStyle:"none"}} 
                         onClick={()=>{setShowChange(true);setModify(false)}}>修改时间</button>
                 }
-                <DigitalClock time={time} scale={scale}/>
+                <DigitalClock time={currentTime} scale={scale}/>
             </div>
             {
                 showChange&&<div style={{ position:"fixed" ,left:"0",top:"0"}}>
