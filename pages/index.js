@@ -1,4 +1,3 @@
-import SampleComponent from "../components/sample";
 import BasicClock from "../components/utils/BasicClock";
 import AutoClock from "../components/utils/AutoClock";
 import FloatingButton from "../components/FloatingButton";

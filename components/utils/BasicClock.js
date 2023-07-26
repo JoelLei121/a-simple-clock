@@ -28,7 +28,7 @@ export default function BasicClock({ props }) {
                     <circle id="circle" style={{stroke: "#FFF", strokeWidth: "12px", fill:"#20B7AF"}} cx="100" cy="100" r="80"></circle>
                 </g>
                 <g>
-                    <line x1="100" y1="100" x2="100" y2="55" transform={`rotate(${(data.initTime.hour + data.time.hour)*15} 100 100)`} style={{strokeWidth: "3px", stroke: "#fffbf9"}} id="hourhand">
+                    <line x1="100" y1="100" x2="100" y2="55" transform={`rotate(${(data.initTime.hour + data.time.hour)*30} 100 100)`} style={{strokeWidth: "3px", stroke: "#fffbf9"}} id="hourhand">
                     </line>
                     <line x1="100" y1="100" x2="100" y2="40" transform={`rotate(${(data.initTime.minute + data.time.minute)*6} 100 100)`} style={{strokeWidth: "4px", stroke: "#fdfdfd"}} id="minutehand">
                     </line>

@@ -19,6 +19,9 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
         setCounting(time.hour * 3600 + time.minute * 60 + time.second)
         intervalId = setInterval(incPerSec, 1000);
         /* BUG: Stop counting when alert, which means setInterval is not safe */
+        return () => {
+            clearInterval(intervalId);
+        }
     }, []);
     useEffect(() => {
         setTime({
