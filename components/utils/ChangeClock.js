@@ -78,7 +78,7 @@ export default function ChangeClock({initTime={ hour: 1, minute: 10, second: 30}
     }
     
     return (
-        <div style={{display:"flex", flexDirection:"column",alignItems:"center", width: `${200*scale}px`, height: `${200*scale}px` }} 
+        <div style={{width: `${200*scale}px`, height: `${200*scale}px` }} 
           onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={stopDragging} onMouseLeave={stopDragging}>
             <svg width='100%' height='100%' viewBox="0 0 200 200" >
                 <g>
@@ -98,32 +98,34 @@ export default function ChangeClock({initTime={ hour: 1, minute: 10, second: 30}
                     { [...Array(12).keys()].map(i => decoration(i)) }
                 </g>
             </svg>
-            <DigitalClock time={time} scale={scale}/>
-            <div>
-              <input className={styles.input} type="number" min="0" max="23" step="1" value={Math.floor(time.hour)} onChange={(e)=>{setTime({
-                hour: e.target.value,
-                minute: time.minute,
-                second: time.second
-              })}
-              } />
-              <span>:</span>
-              <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.minute)} onChange={(e)=>{setTime({  
-                hour: time.hour,
-                minute: e.target.value,
-                second: time.second
-              })}
-              } />
-              <span>:</span>
-              <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.second)} onChange={(e)=>{setTime({
-                hour: time.hour,
-                minute: time.minute,
-                second: e.target.value
-              })}
-              } />
-            </div>
-            <div style={{justifyItems:"center"}}>
-              <button className={styles.button} style={{backgroundColor:"#3aac3c"}} onClick={()=>confirmTime(time)}>确认修改</button>
-              <button className={styles.button} style={{backgroundColor:"#c9295e"}} onClick={()=>cancel()}>取消</button>
+            <div style={{display:"flex", flexDirection:"column",alignContent:"center",alignItems:"center"}}>
+              <DigitalClock time={time} scale={scale}/>
+              <div>
+                <input className={styles.input} type="number" min="0" max="23" step="1" value={Math.floor(time.hour)} onChange={(e)=>{setTime({
+                  hour: e.target.value,
+                  minute: time.minute,
+                  second: time.second
+                })}
+                } />
+                <span>:</span>
+                <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.minute)} onChange={(e)=>{setTime({  
+                  hour: time.hour,
+                  minute: e.target.value,
+                  second: time.second
+                })}
+                } />
+                <span>:</span>
+                <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.second)} onChange={(e)=>{setTime({
+                  hour: time.hour,
+                  minute: time.minute,
+                  second: e.target.value
+                })}
+                } />
+              </div>
+              <div style={{justifyItems:"center"}}>
+                <button className={styles.button} style={{backgroundColor:"#3aac3c"}} onClick={()=>confirmTime(time)}>确认修改</button>
+                <button className={styles.button} style={{backgroundColor:"#c9295e"}} onClick={()=>cancel()}>取消</button>
+              </div>
             </div>
         </div>
     )

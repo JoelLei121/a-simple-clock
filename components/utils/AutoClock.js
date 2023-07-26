@@ -25,6 +25,9 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
         setCounting(time.hour * 3600 + time.minute * 60 + time.second)
         intervalId = setInterval(incPerSec, 1000);
         /* BUG: Stop counting when alert, which means setInterval is not safe */
+        return ()=>{
+            clearInterval(intervalId);
+        }
     }, []);
     useEffect(() => {
         setTime({
@@ -50,28 +53,31 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
             minute: minute,
             second: second
         })
+        setCounting(hour * 3600 + minute * 60 + second)
         setModify(false)
         setShowChange(false)
     }
 
     return (
         <>
-            <div style={{display: "flex", flexDirection: "column", alignItems: "center", filter: showChange?"blur(5px)":"none"}} 
+            <div style={{display: "flex", flexDirection: "column", alignItems: "center", filter: showChange?"blur(10px)":"none"}} 
                 onClick={(currentState=="NORMAL")?()=>{modify?setModify(false):setModify(true)}:()=>{}}>
                 { 
                     reverse ? 
                     <ReverseClock props={{time: time, scale: scale}}/> : 
                     <BasicClock props={{time: time, scale: scale}}/>
                 }{
-                    modify && <button onClick={()=>{setShowChange(true);setModify(false)}}>修改时间</button>
+                    modify && <button style={{height:"30px",width:"160px",fontSize:"medium",borderRadius:"5px",backgroundColor:"#00d5ff",margin:"0 0 10px 0",color:"#ffffff",borderStyle:"none"}} 
+                        onClick={()=>{setShowChange(true);setModify(false)}}>修改时间</button>
                 }
                 <DigitalClock time={time} scale={scale}/>
             </div>
             {
-                showChange&&<div style={{ position:"relative", top:"-100px" }}>
+                showChange&&<div style={{ position:"fixed" ,left:"0",top:"0"}}>
                     <ChangeClock initTime={time} scale={scale} confirmTime={handleConfirm} cancel={handleCancel} />
-                </div>
+                    </div>
             }
+
         </>
     )
 }
