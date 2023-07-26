@@ -66,7 +66,9 @@ export default function Timer({ scale=1 }) {
 
     return (
         <div className={styles.Timer}>
-            <Alarm url="http://streaming.tdiradio.com:8000/house.mp3" status={status}/>
+            {
+                status === 'alarm' && <Alarm url="http://streaming.tdiradio.com:8000/house.mp3" status={status}/>
+            }
             <ControlClock time={time} scale={scale}/>
             <ButtonSet status={status} methods={
                 {start: handleStart, stop: handleStop, continue: handleContinue, suspend: handleSuspend, stopAlarm: handleStopAlarm}
