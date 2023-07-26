@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { CurrentStateContext, CurrentTimeContext } from "../contexts/GlobalContext";
 import DigitalClock from "../components/DigitalClock";
 import StopWatch from "../components/StopWatch";
+import Timer from "../components/Timer";
 
 
 export default function HomePage() {
@@ -34,6 +35,12 @@ export default function HomePage() {
                 {
                     currentState === 'STOPWATCH' &&
                     <StopWatch scale={2}/>
+                }
+
+                {/* timer */}
+                {
+                    currentState === 'TIMER' &&
+                    <Timer scale={2}/>
                 }
                 
             </div>
