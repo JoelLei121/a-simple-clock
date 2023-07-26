@@ -3,7 +3,7 @@ import DigitalClock from "../DigitalClock";
 import styles from "../../styles/ChangeClock.module.css";
 
 
-export default function ChangeClock({initTime={ hour: 1, minute: 10, second: 30}, scale=1 ,confirmTime, cancel}) {
+export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=1 ,confirmTime, cancel}) {
     const [time, setTime] = useState(initTime);
     const [dragging, setDragging] = useState(false);
     const [target, setTarget] = useState(0);
@@ -32,27 +32,15 @@ export default function ChangeClock({initTime={ hour: 1, minute: 10, second: 30}
     function handleMouseMove(ev){
       if(dragging){
         let angle=positionToAngle(ev.clientX,ev.clientY);
-        angle%=360;
+
         if(target==Hand.second){
-          setTime({
-            hour: time.hour,
-            minute: time.minute,
-            second: angle/6
-          })
+          setTime({...time,second:angle/6})
         }
         else if(target==Hand.minute){
-          setTime({
-            hour: time.hour,
-            minute: angle/6,
-            second: time.second
-          })
+          setTime({...time,minute:angle/6})
         }
         else if(target==Hand.hour){
-          setTime({
-            hour: angle/30,
-            minute: time.minute,
-            second: time.second
-          })
+          setTime({...time,hour:angle/30})
         }
       }
     }
@@ -101,25 +89,16 @@ export default function ChangeClock({initTime={ hour: 1, minute: 10, second: 30}
             <div style={{display:"flex", flexDirection:"column",alignContent:"center",alignItems:"center"}}>
               <DigitalClock time={time} scale={scale}/>
               <div>
-                <input className={styles.input} type="number" min="0" max="23" step="1" value={Math.floor(time.hour)} onChange={(e)=>{setTime({
-                  hour: e.target.value,
-                  minute: time.minute,
-                  second: time.second
-                })}
+                <input className={styles.input} type="number" min="0" max="23" step="1" value={Math.floor(time.hour)} 
+                  onChange={(e)=>{setTime({...time,hour:e.target.value})}
                 } />
                 <span>:</span>
-                <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.minute)} onChange={(e)=>{setTime({  
-                  hour: time.hour,
-                  minute: e.target.value,
-                  second: time.second
-                })}
+                <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.minute)} 
+                  onChange={(e)=>{setTime({...time,minute:e.target.value})}
                 } />
                 <span>:</span>
-                <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.second)} onChange={(e)=>{setTime({
-                  hour: time.hour,
-                  minute: time.minute,
-                  second: e.target.value
-                })}
+                <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.second)} 
+                  onChange={(e)=>{setTime({...time,second:e.target.value})}
                 } />
               </div>
               <div style={{justifyItems:"center"}}>

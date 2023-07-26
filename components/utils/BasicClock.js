@@ -4,7 +4,6 @@ export default function BasicClock({timeStamp=0, scale=1}) {
     let hour=timeStamp/120000%12;
     let minute=(timeStamp%3600000)/10000;
     let second=(timeStamp%60000)/1000*6;
-    console.log(timeStamp)
 
     return (
         <div style={{width: `${200*scale}px`, height: `${200*scale}px` }}>
