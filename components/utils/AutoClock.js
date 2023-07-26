@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import BasicClock from "./BasicClock";
 import ReverseClock from "./ReverseClock";
+import ChangeClock from "./ChangeClock";
 import DigitalClock from "../DigitalClock";
 
 import { CurrentTimeContext } from "../../contexts/GlobalContext";
@@ -10,8 +11,8 @@ var intervalId;
 export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0, second: 0}, scale=1 }) {
     const [counting, setCounting] = useState(0);
     const [time, setTime] = useState(initTime);
-    const [modify,setModiry] = useState(false);
-    const [blur,setBlur] = useState(false);
+    const [modify,setModify] = useState(false);
+    const [showChange,setShowChange] = useState(false);
     const timeContext = useContext(CurrentTimeContext);
     const stateContext = useContext(CurrentStateContext);
     const currentState = stateContext.currentState;
@@ -38,22 +39,39 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
         timeContext.setCurrentTime(time);
     }, [time]);
 
-    function handleModify(){
-        setModiry(false)
-        setBlur(true)
+    function handleCancel(){
+        setModify(false)
+        setShowChange(false)
+    }
+
+    function handleConfirm({hour,minute,second}){
+        setTime({
+            hour: hour,
+            minute: minute,
+            second: second
+        })
+        setModify(false)
+        setShowChange(false)
     }
 
     return (
-        <div style={{display: "flex", flexDirection: "column", alignItems: "center", filter: blur?"blur(5px)":"none"}} 
-            onClick={(currentState=="NORMAL")?()=>{modify?setModiry(false):setModiry(true)}:()=>{}}>
-            { 
-                reverse ? 
-                <ReverseClock props={{time: time, scale: scale}}/> : 
-                <BasicClock props={{time: time, scale: scale}}/>
-            }{
-                modify && <button>修改时间</button>
+        <>
+            <div style={{display: "flex", flexDirection: "column", alignItems: "center", filter: showChange?"blur(5px)":"none"}} 
+                onClick={(currentState=="NORMAL")?()=>{modify?setModify(false):setModify(true)}:()=>{}}>
+                { 
+                    reverse ? 
+                    <ReverseClock props={{time: time, scale: scale}}/> : 
+                    <BasicClock props={{time: time, scale: scale}}/>
+                }{
+                    modify && <button onClick={()=>{setShowChange(true);setModify(false)}}>修改时间</button>
+                }
+                <DigitalClock time={time} scale={scale}/>
+            </div>
+            {
+                showChange&&<div style={{ position:"relative", top:"-100px" }}>
+                    <ChangeClock initTime={time} scale={scale} confirmTime={handleConfirm} cancel={handleCancel} />
+                </div>
             }
-            <DigitalClock time={time} scale={scale}/>
-        </div>
+        </>
     )
 }
