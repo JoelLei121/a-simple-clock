@@ -90,19 +90,19 @@ export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=
               <DigitalClock time={time} scale={scale}/>
               <div>
                 <input className={styles.input} type="number" min="0" max="23" step="1" value={Math.floor(time.hour)} 
-                  onChange={(e)=>{setTime({...time,hour:e.target.value})}
+                  onChange={(e)=>{setTime({...time,hour:Number(e.target.value)})}
                 } />
                 <span>:</span>
                 <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.minute)} 
-                  onChange={(e)=>{setTime({...time,minute:e.target.value})}
+                  onChange={(e)=>{setTime({...time,minute:Number(e.target.value)})}
                 } />
                 <span>:</span>
                 <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.second)} 
-                  onChange={(e)=>{setTime({...time,second:e.target.value})}
+                  onChange={(e)=>{setTime({...time,second:Number(e.target.value)})}
                 } />
               </div>
               <div style={{justifyItems:"center"}}>
-                <button className={styles.button} style={{backgroundColor:"#3aac3c"}} onClick={()=>confirmTime(time)}>确认修改</button>
+                <button className={styles.button} style={{backgroundColor:"#3aac3c"}} onClick={()=>{console.log(time); confirmTime(time)}}>确认修改</button>
                 <button className={styles.button} style={{backgroundColor:"#c9295e"}} onClick={()=>cancel()}>取消</button>
               </div>
             </div>
