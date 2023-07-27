@@ -92,7 +92,7 @@ export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=
               } />
             </div>
             <div style={{justifyItems:"center"}}>
-              <button className={styles.button} style={{backgroundColor:"#3aac3c"}} onClick={()=>confirmTime(time)}>确认修改</button>
+              <button className={styles.button} style={{backgroundColor:"#3aac3c"}} onClick={()=>confirmTime(time)}>确认</button>
               <button className={styles.button} style={{backgroundColor:"#c9295e"}} onClick={()=>cancel()}>取消</button>
             </div>
           </div>

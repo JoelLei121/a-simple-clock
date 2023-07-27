@@ -10,7 +10,6 @@ var intervalId = null;
 export default function Timer({ scale=1, url="/audios/test.mp3" }) {
     const [status, setStatue] = useState('stopped'); //['stopped', 'running', 'suspended', 'alarm']
     const [alarmOff, setAlarmOff] = useState(true); //alarm never work or has been closed
-    const [modify, setModify] = useState(false);
     const [showChange, setShowChange] = useState(false);
     
     const initStamp = useRef(0)
@@ -65,7 +64,6 @@ export default function Timer({ scale=1, url="/audios/test.mp3" }) {
     }
 
     function handleCancel(){
-        setModify(false);
         setShowChange(false);
         console.log("cancel");
     }
@@ -74,7 +72,6 @@ export default function Timer({ scale=1, url="/audios/test.mp3" }) {
         setTimeStamp(timeToStamp(time));
         initStamp.current=timeToStamp(time);
         stakeStamp.current=Math.floor(performance.now());
-        setModify(false);
         setShowChange(false);
         console.log("confirm");
     }
@@ -85,13 +82,9 @@ export default function Timer({ scale=1, url="/audios/test.mp3" }) {
                 {
                     status === 'alarm' && <AlarmAudio url={url}/>
                 }
-                <CombinedClock time={stampToTime(timeStamp)} scale={scale}
-                    // error 
-                    onClick={(alarmOff)?()=>{modify?setModify(false):setModify(true)}:()=>{}}/>
-                {
-                    modify && <button style={{height:"30px",width:"160px",fontSize:"medium",borderRadius:"5px",backgroundColor:"#00d5ff",margin:"0 0 10px 0",color:"#ffffff",borderStyle:"none"}} 
-                        onClick={()=>{setShowChange(true);setModify(false)}}>修改时间</button>
-                }
+                <div onClick={()=>{setShowChange(true)}}>
+                    <CombinedClock time={stampToTime(timeStamp)} scale={scale}/>
+                </div>
                 <ButtonSet status={status} timeStamp={timeStamp} methods={
                     {start: handleStart, stop: handleStop, continue: handleContinue, suspend: handleSuspend, stopAlarm: handleStopAlarm}
                 }/>
