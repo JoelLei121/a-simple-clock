@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState,useRef } from "react";
 import styles from "../styles/AlarmList.module.css";
 import { CurrentTimeContext, AlarmTimeContext } from "../contexts/GlobalContext";
 import ChangeClock from "./utils/ChangeClock";
@@ -13,6 +13,8 @@ export default function AlarmList({ alarmActivated, setAlarmActivated }) {
     const AlarmContext = useContext(AlarmTimeContext);
 
     const [modifying, setModifying] = useState(false);
+
+    const titleRef = useRef("Untitled");
 
     function getTimeString(time) {
         return `${time.hour}:${time.minute}`
@@ -70,14 +72,13 @@ export default function AlarmList({ alarmActivated, setAlarmActivated }) {
     }
     function handleConfirm(time) {
         setModifying(false);
-        setAlarmDataList(l => [
-            ...l, 
-            {
-                time: {hour:Math.floor(time.hour), minute:Math.floor(time.minute), second:0},
-                title: 'title',
-                enabled: true
-            }
-        ]);
+        let data={
+            time: {hour:Math.floor(time.hour), minute:Math.floor(time.minute), second:0},
+            title: titleRef.current,
+            enabled: true
+        }
+        titleRef.current="Untitled"
+        setAlarmDataList(l => [...l, data]);
         setResetList(l => [
             ...l, 
             false
@@ -116,6 +117,10 @@ export default function AlarmList({ alarmActivated, setAlarmActivated }) {
                 modifying &&
                 <div className={styles.changeClock}>
                     <ChangeClock initTime={currentTime} scale={2} confirmTime={handleConfirm} cancel={handleCancel}/>
+                    <input  type="text" placeholder="title" style={{height:"40px", fontSize:"30px", width:"150px", fontFamily:"sans-serif", borderRadius:"10px", borderColor:"gray"}} 
+                        onChange={(ev)=>{
+                            titleRef.current = ev.target.value;
+                        }}/>
                 </div>
             }
         </>

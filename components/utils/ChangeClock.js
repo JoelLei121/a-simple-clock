@@ -82,15 +82,25 @@ export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=
             <DigitalClock time={time} scale={scale}/>
             <div>
               <input className={styles.input} type="number" min="0" max="23" step="1" value={Math.floor(time.hour)} 
-                onChange={(e)=>{setTime({...time,hour:Number(e.target.value)})}
+                onChange={(ev)=>{
+                  if(ev.target.value<0) setTime({...time,hour:0});
+                  else if(ev.target.value>=24) setTime({...time,hour:23});
+                  else setTime({...time,hour:Number(ev.target.value)});
+                }
               } />
               <span>:</span>
               <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.minute)} 
-                onChange={(e)=>{setTime({...time,minute:Number(e.target.value)})}
-              } />
+                onChange={(ev)=>{
+                  if(ev.target.value<0) setTime({...time,minute:0});
+                  else if(ev.target.value>=60) setTime({...time,minute:59});
+                  else setTime({...time,minute:Number(ev.target.value)});}
+                } />
               <span>:</span>
               <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.second)} 
-                onChange={(e)=>{setTime({...time,second:Number(e.target.value)})}
+                onChange={(ev)=>{
+                  if(ev.target.value<0) setTime({...time,second:0});
+                  else if(ev.target.value>=60) setTime({...time,second:59});
+                  else setTime({...time,second:Number(ev.target.value)});}
               } />
             </div>
             <div style={{justifyItems:"center"}}>
