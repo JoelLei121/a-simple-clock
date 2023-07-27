@@ -1,23 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styles from "../styles/Timer.module.css";
 import CombinedClock from "./utils/CombinedClock";
-import Alarm, { AlarmAudio } from "./utils/Alarm";
+import { AlarmAudio } from "./utils/Alarm"; 
+import { stampToTime, timeToStamp } from "./utils/functions"; 
+import ChangeClock from "./utils/ChangeClock";
 
 
 var intervalId = null;
 export default function Timer({ scale=1, url="/audios/test.mp3" }) {
     const [status, setStatue] = useState('stopped'); //['stopped', 'running', 'suspended', 'alarm']
-    const [counting, setCounting] = useState(0);
     const [alarmOff, setAlarmOff] = useState(true); //alarm never work or has been closed
-    const [time, setTime] = useState({ hour: 0, minute: 0, second: 0 });
-
-    function decPerSec() {
-        setCounting(s => (s - 1));
-    }
+    const [modify, setModify] = useState(false);
+    const [showChange, setShowChange] = useState(false);
+    
+    const initStamp = useRef(0)
+    const stakeStamp = useRef(0)
+    const [timeStamp, setTimeStamp] = useState(0);
 
     useEffect((prevStatus) => {
         if(prevStatus != 'running' && status === 'running') {
-            intervalId = setInterval(decPerSec, 1000);
+            initStamp.current=timeStamp
+            stakeStamp.current=Math.floor(performance.now())
+            intervalId=setInterval(()=>{
+                let now = Math.floor(performance.now());
+                let stamp = (initStamp.current - now + stakeStamp.current)%86400000;
+                setTimeStamp(stamp);
+            },30)
         } else if (status != 'running') {
             if(intervalId != null) {
                 clearInterval(intervalId);
@@ -29,26 +37,20 @@ export default function Timer({ scale=1, url="/audios/test.mp3" }) {
     }, [status]);
 
     useEffect(() => {
-        setTime({
-            hour: counting / 3600,
-            minute: counting / 60,
-            second: counting % 60
-        })
-
-        if(counting === 0){
+        if(timeStamp <= 0){
             if(alarmOff){setStatue("stopped");}
             else{setStatue("alarm")}
+            setTimeStamp(0)
         }
-    }, [counting])
+    }, [timeStamp])
 
     function handleStart() {
         /* TODO: set timer with clock or digital clock */
-        setCounting(3);
         setAlarmOff(false);
         setStatue('running');
     }
     function handleStop() {
-        setCounting(0);
+        setTimeStamp(0);
         setAlarmOff(true);
         setStatue('stopped');
     }
@@ -63,17 +65,45 @@ export default function Timer({ scale=1, url="/audios/test.mp3" }) {
         setStatue('stopped');
     }
 
+    function handleCancel(){
+        setModify(false);
+        setShowChange(false);
+        console.log("cancel");
+    }
+
+    function handleConfirm(time){
+        setTimeStamp(timeToStamp(time));
+        initStamp.current=timeToStamp(time);
+        stakeStamp.current=Math.floor(performance.now());
+        setModify(false);
+        setShowChange(false);
+        console.log("confirm");
+    }
 
     return (
-        <div className={styles.Timer}>
+        <>
+            <div className={styles.Timer}>
+                {
+                    status === 'alarm' && <AlarmAudio url={url}/>
+                }
+                <CombinedClock time={stampToTime(timeStamp)} scale={scale}
+                    // error 
+                    onClick={(alarmOff)?()=>{modify?setModify(false):setModify(true)}:()=>{}}/>
+                {
+                    modify && <button style={{height:"30px",width:"160px",fontSize:"medium",borderRadius:"5px",backgroundColor:"#00d5ff",margin:"0 0 10px 0",color:"#ffffff",borderStyle:"none"}} 
+                        onClick={()=>{setShowChange(true);setModify(false)}}>修改时间</button>
+                }
+                <ButtonSet status={status} methods={
+                    {start: handleStart, stop: handleStop, continue: handleContinue, suspend: handleSuspend, stopAlarm: handleStopAlarm}
+                }/>
+            </div>
             {
-                status === 'alarm' && <AlarmAudio url={url}/>
+                showChange && 
+                <div className={styles.changeClock}>
+                    <ChangeClock initTime={stampToTime(timeStamp)} scale={scale} confirmTime={handleConfirm} cancel={handleCancel} />
+                </div>
             }
-            <CombinedClock time={time} scale={scale}/>
-            <ButtonSet status={status} methods={
-                {start: handleStart, stop: handleStop, continue: handleContinue, suspend: handleSuspend, stopAlarm: handleStopAlarm}
-            }/>
-        </div>
+        </>
     )
 }
 
