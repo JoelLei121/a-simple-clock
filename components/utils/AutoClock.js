@@ -77,7 +77,7 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
             <div style={{...positionStyle, display: "flex", flexDirection: "column", alignItems: "center"}} 
                 onClick={(currentState=="NORMAL") ? () => {modify ? setModify(false) : setModify(true)} : () => {}}>
                 
-                <BasicClock time={stampToTime(timeStamp)} scale={scale}/>
+                <ClockComponent time={stampToTime(timeStamp)} scale={scale}/>
                 {
                     (modify && currentState=="NORMAL") && 
                     <button className={styles.modifyButton} onClick={() => { setShowChange(true); setModify(false) }}>修改时间</button>
