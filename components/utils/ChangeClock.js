@@ -1,10 +1,13 @@
-import { useEffect,useState } from "react";
+import { useEffect,useState,useRef } from "react";
 import DigitalClock from "../DigitalClock";
 import styles from "../../styles/ChangeClock.module.css";
 import BasicClock from "./BasicClock";
 
 
 export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=1, confirmTime, cancel}) {
+
+  //test
+    const center=useRef({x:0,y:0})
     const [time, setTime] = useState(initTime);
     const [dragging, setDragging] = useState(false);
     const [target, setTarget] = useState(0);
@@ -14,6 +17,14 @@ export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=
       minute: 2,
       hour: 3
     }
+
+    useEffect(()=>{
+      let chg=document.getElementById("changeClock")
+      let circle=chg.querySelector("#circle")
+      let rect=circle.getBoundingClientRect()
+      center.current.x=(rect.left+rect.right)/2
+      center.current.y=(rect.top+rect.bottom)/2
+    },[])
 
     function handleMouseDown(ev){
       if(ev.target.getAttribute("id") == "hourhand"){
@@ -52,12 +63,8 @@ export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=
     }
 
     function positionToAngle(x,y){
-      //时钟中心点坐标
-      let center=document.getElementById("center")
-      let cx=(center.getBoundingClientRect().left+center.getBoundingClientRect().right)/2
-      let cy=(center.getBoundingClientRect().top+center.getBoundingClientRect().bottom)/2
       //鼠标与时钟中心点x轴正向的夹角（-180,180）
-      let angle=Math.atan2(cy-y,x-cx)*180/Math.PI
+      let angle=Math.atan2(center.current.y-y,x-center.current.x)*180/Math.PI
       //转换为时钟坐标系下的夹角（0,360）
       angle=90-angle
       if(angle<0){
@@ -67,9 +74,9 @@ export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=
     }
     
     return (
-        <div onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={stopDragging} onMouseLeave={stopDragging}>
+        <div id="changeClock" onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={stopDragging} onMouseLeave={stopDragging}>
           <BasicClock time={time} scale={scale}/>
-            <div style={{display:"flex", flexDirection:"column",alignContent:"center",alignItems:"center"}}>
+          <div style={{display:"flex", flexDirection:"column",alignContent:"center",alignItems:"center"}}>
             <DigitalClock time={time} scale={scale}/>
             <div>
               <input className={styles.input} type="number" min="0" max="23" step="1" value={Math.floor(time.hour)} 
