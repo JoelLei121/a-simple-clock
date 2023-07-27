@@ -2,19 +2,13 @@ import BasicClock from "./BasicClock";
 import ReverseClock from "./ReverseClock";
 import DigitalClock from "../DigitalClock";
 
-export default function ControlClock({ 
-    reverse = false, 
-    initTime = { hour: 0, minute: 0, second: 0}, 
+export default function CombinedClock({ 
     time = { hour: 0, minute: 0, second: 0 }, 
     scale = 1 
 }) {
     return (
         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-            { 
-                reverse ? 
-                <ReverseClock props={{time: time, initTime: initTime, scale: scale}}/> : 
-                <BasicClock props={{time: time, initTime: initTime, scale: scale}}/>
-            }
+            <BasicClock time={time} scale={scale}/>
             <DigitalClock time={time} scale={scale}/>
         </div>
     )

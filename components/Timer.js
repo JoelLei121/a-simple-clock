@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/Timer.module.css";
-import ControlClock from "./utils/ControlClock";
+import ControlClock from "./utils/CombinedClock";
 import Alarm from "./utils/Alarm";
 
 

@@ -26,7 +26,6 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
     function updateTimeStamp(){
         let now = Math.floor(performance.now());
         let stamp = (now - stakeStamp.current+ initStamp.current)%86400000;
-        console.log(stamp)
         setTimeStamp(stamp);
     }
 
@@ -49,12 +48,8 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
     }
 
     function handleConfirm(time){
-        console.log(time)
-        console.log(stampToTime(timeToStamp(time)))
         setTimeStamp(timeToStamp(time))
-        console.log( "previous:"+initStamp.current)
         initStamp.current=timeToStamp(time)
-        console.log("after:"+initStamp.current)
         stakeStamp.current=Math.floor(performance.now())
         setModify(false)
         setShowChange(false)

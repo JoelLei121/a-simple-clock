@@ -1,24 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styles from "../styles/StopWatch.module.css";
-import ControlClock from "./utils/ControlClock";
+import ControlClock from "./utils/CombinedClock";
+import { stampToTime,timeToStamp } from "./utils/functions";    
 
 var intervalId = null;
 export default function StopWatch({ scale=1 }) {
+    const initStamp=useRef(0)
+    const stakeStamp=useRef(0)
+    const [timeStamp, setTimeStamp] = useState(0);
+
     const [status, setStatue] = useState('setting');
-    const [recordList, setRecordList] = useState([]);
+    const [recordList, setRecordList] = useState([]);  
 
-    const [counting, setCounting] = useState(0);
-    const [time, setTime] = useState({ hour: 0, minute: 0, second: 0 });
-
-    function incPerSec() {
-        setCounting(s => (s + 1 + 86400) % 86400);
-    }
 
     useEffect((prevStatus) => {
         if(prevStatus != 'running' && status === 'running') {
-            intervalId = setInterval(incPerSec, 1000);
+            console.log("create")
+            initStamp.current=timeStamp
+            stakeStamp.current=Math.floor(performance.now())
+            intervalId=setInterval(()=>{
+                let now = Math.floor(performance.now());
+                let stamp = (now - stakeStamp.current+ initStamp.current)%86400000;
+                setTimeStamp(stamp);
+            },30)
         } else if (status != 'running') {
             if(intervalId != null) {
+                console.log("inside clear")
                 clearInterval(intervalId);
             }
             intervalId = null;
@@ -27,14 +34,6 @@ export default function StopWatch({ scale=1 }) {
         /* BUG: Restart will cause loss of time, which is inaccurate */
     }, [status]);
 
-    useEffect(() => {
-        setTime({
-            hour: counting / 3600,
-            minute: counting / 60,
-            second: counting % 60
-        })
-    }, [counting])
-
     function handleStart() {
         setStatue('running');
     }
@@ -42,11 +41,14 @@ export default function StopWatch({ scale=1 }) {
         setStatue('stopped');
     }
     function handleReset() {
+        initStamp.current=0;
+        stakeStamp.current=0;
+        setTimeStamp(0)
         setStatue('setting');
         setRecordList([]);
-        setCounting(0);
     }
     function handleRecord() {
+        let time=stampToTime(timeStamp)
         setRecordList(l => [
             ...l,
             {
@@ -65,7 +67,7 @@ export default function StopWatch({ scale=1 }) {
 
     return (
         <div className={styles.StopWatch}>
-            <ControlClock time={time} scale={scale}/>
+            <ControlClock time={stampToTime(timeStamp)} scale={scale}/>
             <ButtonSet status={status} methods={
                 {start: handleStart, stop: handleStop, continue: handleContinue, reset: handleReset, record: handleRecord}
             }/>
