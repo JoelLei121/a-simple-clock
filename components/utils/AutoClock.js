@@ -3,6 +3,7 @@ import BasicClock from "./BasicClock";
 import ReverseClock from "./ReverseClock";
 import ChangeClock from "./ChangeClock";
 import DigitalClock from "../DigitalClock";
+import {stampToTime,timeToStamp} from "./functions"
 
 import { CurrentTimeContext } from "../../contexts/GlobalContext";
 import { CurrentStateContext } from "../../contexts/GlobalContext";
@@ -13,17 +14,19 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
     const stakeStamp=useRef(Math.floor(performance.now()))
     const [timeStamp, setTimeStamp] = useState(0);
 
-    function stampToTime(stamp){
-        return {hour:stamp/3600000,minute:stamp%3600000/60000,second:stamp%60000/1000}
-    }
-  
-    function timeToStamp(time){
-        return Math.floor(Math.floor(time.hour)*3600000+Math.floor(time.minute)*60000+time.second*1000);
-    }
+    const [modify,setModify] = useState(false);
+    const [showChange,setShowChange] = useState(false);
+    const timeContext = useContext(CurrentTimeContext);
+    const stateContext = useContext(CurrentStateContext);
+    const currentState = stateContext.currentState;
+    const currentTime = timeContext.currentTime;
+
+
 
     function updateTimeStamp(){
         let now = Math.floor(performance.now());
         let stamp = (now - stakeStamp.current+ initStamp.current)%86400000;
+        console.log(stamp)
         setTimeStamp(stamp);
     }
 
@@ -40,16 +43,43 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
         timeContext.setCurrentTime(time);
     }, [timeStamp]);
 
+    function handleCancel(){
+        setModify(false)
+        setShowChange(false)
+    }
+
+    function handleConfirm(time){
+        console.log(time)
+        console.log(stampToTime(timeToStamp(time)))
+        setTimeStamp(timeToStamp(time))
+        console.log( "previous:"+initStamp.current)
+        initStamp.current=timeToStamp(time)
+        console.log("after:"+initStamp.current)
+        stakeStamp.current=Math.floor(performance.now())
+        setModify(false)
+        setShowChange(false)
+    }
 
     return (
-        <div style={{display: "flex", flexDirection: "column", alignItems: "center", filter: showChange?"blur(10px)":"none"}} 
-            onClick={(currentState=="NORMAL")?()=>{modify?setModify(false):setModify(true)}:()=>{}}>
-            { 
-                reverse ? 
-                <ReverseClock props={{time: time, scale: scale}}/> : 
-                <BasicClock initTime={stampToTime(timeStamp)} scale={scale}/>
+        <>
+            <div style={{display: "flex", flexDirection: "column", alignItems: "center", filter: showChange?"blur(10px)":"none"}} 
+                onClick={(currentState=="NORMAL")?()=>{modify?setModify(false):setModify(true)}:()=>{}}>
+                { 
+                    // reverse ? 
+                    // <ReverseClock props={{time: time, scale: scale}}/> : 
+                    <BasicClock time={stampToTime(timeStamp)} scale={scale}/>
+                }{
+                    modify && <button style={{height:"30px",width:"160px",fontSize:"medium",borderRadius:"5px",backgroundColor:"#00d5ff",margin:"0 0 10px 0",color:"#ffffff",borderStyle:"none"}} 
+                        onClick={()=>{setShowChange(true);setModify(false)}}>修改时间</button>
+                }
+                <DigitalClock time={currentTime} scale={scale}/>
+            </div>
+            {
+                showChange&&<div style={{ position:"fixed" ,left:"0",top:"0"}}>
+                    <ChangeClock initTime={stampToTime(timeStamp)} scale={scale} confirmTime={handleConfirm} cancel={handleCancel} />
+                    </div>
             }
-            <DigitalClock time={currentTime} scale={scale}/>
-        </div>
+
+        </>
     )
 }

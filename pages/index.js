@@ -3,14 +3,12 @@ import AutoClock from "../components/utils/AutoClock";
 import FloatingButton from "../components/FloatingButton";
 import AlarmList from "../components/AlarmList";
 
-import ChangeClock from "../components/utils/ChangeClock";
 
 import { useContext } from "react";
 import { CurrentStateContext, CurrentTimeContext } from "../contexts/GlobalContext";
 import DigitalClock from "../components/DigitalClock";
 import StopWatch from "../components/StopWatch";
 import Timer from "../components/Timer";
-import NormalClock from "../components/NormalClock"
 
 
 export default function HomePage() {
@@ -30,7 +28,7 @@ export default function HomePage() {
             <div style={{width: "100%", height: "100%"}}>
                 {/* normal clock */}
                 <div style={...mainClockPosition}>
-                    <NormalClock scale={mainClockScale} initTime={initTime}/> 
+                    <AutoClock scale={mainClockScale} initTime={initTime}/> 
                 </div>
 
                 {/* stop watch */}
