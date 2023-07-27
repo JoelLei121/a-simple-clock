@@ -8,9 +8,10 @@ import { CurrentStateContext } from "../../contexts/GlobalContext";
 import { CurrentStyleContext } from "../../contexts/GlobalContext";
 import RomanClock from "../styled_clocks/RomanClock";
 import PlateClock from "../styled_clocks/PlateClock";
+import styles from "../../styles/AutoClock.module.css";
 
 var intervalId;
-export default function AutoClock({ reverse = false, initTime = { hour: 0, minute: 0, second: 0 }, scale = 1 }) {
+export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0, second: 0}, scale=1, positionStyle }) {
     const initStamp = useRef(timeToStamp(initTime))
     const stakeStamp = useRef(Math.floor(performance.now()))
     const [timeStamp, setTimeStamp] = useState(0);
@@ -73,19 +74,19 @@ export default function AutoClock({ reverse = false, initTime = { hour: 0, minut
 
     return (
         <>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", filter: showChange ? "blur(10px)" : "none" }}
-                onClick={(currentState == "NORMAL") ? () => { modify ? setModify(false) : setModify(true) } : () => { }}>
-
-                <ClockComponent time={stampToTime(timeStamp)} scale={scale} />
+            <div style={{...positionStyle, display: "flex", flexDirection: "column", alignItems: "center"}} 
+                onClick={(currentState=="NORMAL") ? () => {modify ? setModify(false) : setModify(true)} : () => {}}>
+                
+                <BasicClock time={stampToTime(timeStamp)} scale={scale}/>
                 {
-                    modify && <button style={{ height: "30px", width: "160px", fontSize: "medium", borderRadius: "5px", backgroundColor: "#00d5ff", margin: "0 0 10px 0", color: "#ffffff", borderStyle: "none" }}
-                        onClick={() => { setShowChange(true); setModify(false) }}>修改时间</button>
+                    (modify && currentState=="NORMAL") && 
+                    <button className={styles.modifyButton} onClick={() => { setShowChange(true); setModify(false) }}>修改时间</button>
                 }
                 <DigitalClock time={currentTime} scale={scale} />
             </div>
             {
-                showChange &&
-                <div style={{ position: "fixed", left: "0", top: "0" }}>
+                showChange && 
+                <div className={styles.changeClock}>
                     <ChangeClock initTime={stampToTime(timeStamp)} scale={scale} confirmTime={handleConfirm} cancel={handleCancel} />
                 </div>
             }

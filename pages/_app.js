@@ -7,18 +7,18 @@ export default function App({ Component, pageProps}) {
     const [currentStyle, setCurrentStyle] = useState('BASIC');
 
     /* something goes wrong with Date */
-    // let d = new Date();
-    // let initTime = {
-    //     hour: d.getHours(),
-    //     minute: d.getMinutes(),
-    //     second: d.getSeconds()
-    // }
-
+    let d = new Date();
     let initTime = {
-        hour: 0,
-        minute: 0,
-        second: 0
+        hour: d.getHours(),
+        minute: d.getMinutes(),
+        second: d.getSeconds()
     }
+
+    // let initTime = {
+    //     hour: 0,
+    //     minute: 0,
+    //     second: 0
+    // }
     const [currentTime, setCurrentTime] = useState(initTime);
     const [alarmTime, setAlarmTime] = useState(initTime);
     const [alarmTitle, setAlarmTitle] = useState("");
