@@ -26,7 +26,7 @@ export default function HomePage() {
     return (
         <>
             <div style={{width: "100%", height: "100%"}}>
-                {/* normal clock */}
+                {/* normal clock */} 
                 <div style={...mainClockPosition}>
                     <AutoClock scale={mainClockScale} initTime={initTime}/> 
                 </div>

@@ -6,6 +6,7 @@ import {stampToTime,timeToStamp} from "./functions"
 
 import { CurrentTimeContext } from "../../contexts/GlobalContext";
 import { CurrentStateContext } from "../../contexts/GlobalContext";
+import RomanClock from "../styled_clocks/RomanClock";
 
 var intervalId;
 export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0, second: 0}, scale=1 }) {
