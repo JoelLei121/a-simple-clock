@@ -55,15 +55,16 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
 
     return (
         <>
-            <div style={{...positionStyle, display: "flex", flexDirection: "column", alignItems: "center"}} 
+            <div style={{...positionStyle, display: "flex", flexDirection: "column", alignItems: "center", cursor: 'pointer'}} 
                 onClick={(currentState=="NORMAL") ? () => {modify ? setModify(false) : setModify(true)} : () => {}}>
                 
                 <BasicClock time={stampToTime(timeStamp)} scale={scale}/>
+                <DigitalClock time={currentTime} scale={scale} />
                 {
                     (modify && currentState=="NORMAL") && 
-                    <button className={styles.modifyButton} onClick={() => { setShowChange(true); setModify(false) }}>修改时间</button>
+                    <button className={styles.modifyButton} onClick={() => { setShowChange(true); setModify(false) }} style={{marginTop: '30px', cursor: 'pointer'}}>修改时间</button>
                 }
-                <DigitalClock time={currentTime} scale={scale} />
+                
             </div>
             {
                 showChange && 
