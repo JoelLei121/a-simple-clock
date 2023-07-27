@@ -10,6 +10,7 @@ import { CurrentStateContext, CurrentTimeContext } from "../contexts/GlobalConte
 import DigitalClock from "../components/DigitalClock";
 import StopWatch from "../components/StopWatch";
 import Timer from "../components/Timer";
+import NormalClock from "../components/NormalClock"
 
 
 export default function HomePage() {
@@ -29,7 +30,7 @@ export default function HomePage() {
             <div style={{width: "100%", height: "100%"}}>
                 {/* normal clock */}
                 <div style={...mainClockPosition}>
-                    <AutoClock scale={mainClockScale} initTime={initTime}/> 
+                    <NormalClock scale={mainClockScale} initTime={initTime}/> 
                 </div>
 
                 {/* stop watch */}
