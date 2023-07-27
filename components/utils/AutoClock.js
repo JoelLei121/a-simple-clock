@@ -61,8 +61,9 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
                 <BasicClock time={stampToTime(timeStamp)} scale={scale}/>
                 <DigitalClock time={currentTime} scale={scale} />
                 {
-                    (modify && currentState=="NORMAL") && 
-                    <button className={styles.modifyButton} onClick={() => { setShowChange(true); setModify(false) }} style={{marginTop: '30px', cursor: 'pointer'}}>修改时间</button>
+                    modify && <button style={{height:"30px",width:"120px",fontSize:"medium",borderRadius:"8px",backgroundColor:"#87ceeb",
+                        margin:"0 0 20px 0",color:"#f5f5f5",borderStyle:"none", cursor: 'pointer'}}
+                        onClick={()=>{setShowChange(true);setModify(false)}}>修改时间</button>
                 }
                 
             </div>
