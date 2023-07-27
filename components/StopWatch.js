@@ -30,8 +30,6 @@ export default function StopWatch({ scale=1 }) {
             }
             intervalId = null;
         }
-        /* BUG: Stop counting when alert, which means setInterval is not safe */
-        /* BUG: Restart will cause loss of time, which is inaccurate */
     }, [status]);
 
     function handleStart() {
@@ -56,7 +54,7 @@ export default function StopWatch({ scale=1 }) {
                 time: {
                     hour: Math.floor(time.hour),
                     minute: Math.floor(time.minute),
-                    second: Math.floor(time.second)
+                    second: time.second.toFixed(2)
                 }
             }
         ]);
@@ -123,7 +121,7 @@ function Record({index, time = { hour: 0, minute: 0, second: 0 }}) {
     function timeToString(time) {
         return (time.hour).toString().padStart(2, "0") + ":" 
         + (time.minute).toString().padStart(2, "0") + ":" 
-        + (time.second).toString().padStart(2, "0");
+        + (time.second).toString().padStart(5, "0");
     }
     return(
         <div className={styles.record} >

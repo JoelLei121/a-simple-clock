@@ -22,3 +22,14 @@
     align-items: center;
     z-index: 3;
 }
+
+.modifyButton {
+    height: 30px;
+    width: 160px;
+    font-size: medium;
+    border-radius: 5px;
+    background-color: #00d5ff;
+    margin: 0 0 10px 0;
+    color: white;
+    border-style: none;
+}

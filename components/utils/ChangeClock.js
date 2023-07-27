@@ -6,6 +6,8 @@ import BasicClock from "./BasicClock";
 
 export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=1, confirmTime, cancel}) {
 
+  //confirmTime返回的时间是浮点数，不一定是整数
+
   //test
     const center=useRef({x:0,y:0})
     const [time, setTime] = useState(initTime);
@@ -21,9 +23,11 @@ export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=
     useEffect(()=>{
       let chg=document.getElementById("changeClock")
       let circle=chg.querySelector("#circle")
-      let rect=circle.getBoundingClientRect()
-      center.current.x=(rect.left+rect.right)/2
-      center.current.y=(rect.top+rect.bottom)/2
+      if (circle) {
+        let rect = circle.getBoundingClientRect();
+        center.current.x = (rect.left + rect.right) / 2;
+        center.current.y = (rect.top + rect.bottom) / 2;
+      }
     },[])
 
     function handleMouseDown(ev){
@@ -80,20 +84,30 @@ export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=
             <DigitalClock time={time} scale={scale}/>
             <div>
               <input className={styles.input} type="number" min="0" max="23" step="1" value={Math.floor(time.hour)} 
-                onChange={(e)=>{setTime({...time,hour:Number(e.target.value)})}
+                onChange={(ev)=>{
+                  if(ev.target.value<0) setTime({...time,hour:0});
+                  else if(ev.target.value>=24) setTime({...time,hour:23});
+                  else setTime({...time,hour:Number(ev.target.value)});
+                }
               } />
               <span>:</span>
               <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.minute)} 
-                onChange={(e)=>{setTime({...time,minute:Number(e.target.value)})}
-              } />
+                onChange={(ev)=>{
+                  if(ev.target.value<0) setTime({...time,minute:0});
+                  else if(ev.target.value>=60) setTime({...time,minute:59});
+                  else setTime({...time,minute:Number(ev.target.value)});}
+                } />
               <span>:</span>
               <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.second)} 
-                onChange={(e)=>{setTime({...time,second:Number(e.target.value)})}
+                onChange={(ev)=>{
+                  if(ev.target.value<0) setTime({...time,second:0});
+                  else if(ev.target.value>=60) setTime({...time,second:59});
+                  else setTime({...time,second:Number(ev.target.value)});}
               } />
             </div>
             <div style={{justifyItems:"center"}}>
-              <button className={styles.button} style={{backgroundColor:"#3aac3c"}} onClick={()=>confirmTime(time)}>确认</button>
-              <button className={styles.button} style={{backgroundColor:"#c9295e"}} onClick={()=>cancel()}>取消</button>
+              <button className={styles.button} style={{backgroundColor:"#3aac3c", cursor: 'pointer'}} onClick={()=>confirmTime(time)}>确认</button>
+              <button className={styles.button} style={{backgroundColor:"#c9295e", cursor: 'pointer'}} onClick={()=>cancel()}>取消</button>
             </div>
           </div>
         </div>
