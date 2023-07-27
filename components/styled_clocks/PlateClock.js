@@ -149,7 +149,7 @@ export default function PlateClock({ time = { hour: 0, minute: 0, second: 0 }, s
 
                 </g>
                 {/* 时针表盘 */}
-                <g transform={`rotate(${-time.hour * 6+5 } 100 100)`} style={{
+                <g transform={`rotate(${-time.hour%12*30} 100 100)`} style={{
                     fontFamily: 'BenchNine, sans-serif',
                     fontSize: '12px',
                 }}>
