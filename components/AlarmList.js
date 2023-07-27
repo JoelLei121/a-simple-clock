@@ -84,6 +84,16 @@ export default function AlarmList({ alarmActivated, setAlarmActivated }) {
         ]);
     }
 
+    function handleDelete(index) {
+        console.log(index);
+        let list = [...alarmDataList];
+        list.splice(index, 1);
+        setAlarmDataList([...list]);
+        let resets = [...resetList];
+        resets.splice(index, 1);
+        setResetList([...resets]);
+    }
+
     return (
         <>
             <div className={styles.AlarmList}>
@@ -92,7 +102,9 @@ export default function AlarmList({ alarmActivated, setAlarmActivated }) {
                         alarmDataList.map((data, i) => {
                             return <AlarmItem 
                                 key={i} index={i} time={data.time} title={data.title} 
-                                enabled={data.enabled} onChange={handleOnChange}
+                                enabled={data.enabled} 
+                                onChange={handleOnChange}
+                                onDelete={handleDelete}
                                 reset={resetList[i]}
                             />
                         })
@@ -110,7 +122,8 @@ export default function AlarmList({ alarmActivated, setAlarmActivated }) {
     )
 }
 
-function AlarmItem({ index, time={ hour: 0, minute: 0, second: 0 }, title="title", enabled, onChange, reset=false }) {
+function AlarmItem({ index, time={ hour: 0, minute: 0, second: 0 }, title="title", enabled, onChange, onDelete, reset=false }) {
+    const [deletable, setDeletable] = useState(false);
 
     useEffect((prev) => {
         if(prev === true && reset === false) {
@@ -124,14 +137,29 @@ function AlarmItem({ index, time={ hour: 0, minute: 0, second: 0 }, title="title
 
     return (
         <div className={styles.AlarmItem}>
-            <div>
-                <p style={{fontSize: "28px"}}>{
-                `${String(time.hour).padStart(2, '0')}:${String(time.minute).padStart(2, '0')}`
-                }</p>
-                <p style={{fontSize: "16px"}}>{title}</p>
-            </div>
-            <ToggleSwitch value={enabled} setValue={setEnabled}/>
+            {
+                deletable && <DeleteSvgButton className={styles.DeleteSvgButton} handleClick={() => {onDelete(index); setDeletable(false)}}/>
+            }
+            <label className={styles.alarmSlider}>
+                <input type="checkbox"  onChange={e => { setDeletable(e.target.checked); }} checked={deletable} />
+                <div>
+                    <p style={{fontSize: "28px"}}>{
+                    `${String(time.hour).padStart(2, '0')}:${String(time.minute).padStart(2, '0')}`
+                    }</p>
+                    <p style={{fontSize: "20px"}}>{title}</p>
+                </div>
+                <ToggleSwitch value={enabled} setValue={setEnabled}/>
+            </label>
         </div>
+        // <div className={styles.AlarmItem}>
+        //     <div>
+        //         <p style={{fontSize: "28px"}}>{
+        //         `${String(time.hour).padStart(2, '0')}:${String(time.minute).padStart(2, '0')}`
+        //         }</p>
+        //         <p style={{fontSize: "16px"}}>{title}</p>
+        //     </div>
+        //     <ToggleSwitch value={enabled} setValue={setEnabled}/>
+        // </div>
     )
 }
 
@@ -141,5 +169,18 @@ function ToggleSwitch({ value, setValue }) {
             <input type="checkbox" onChange={e => setValue(e.target.checked)} checked={value}/>
             <span className={styles.slider}></span>
         </label>
+    )
+}
+
+function DeleteSvgButton({ handleClick }) {
+    return (
+        <div className={styles.DeleteSvgButton} onClick={handleClick}>
+            <svg width='100%' height='100%' viewBox="0 0 50 50">
+                <g>
+                    <line x1="25" y1="10" x2="25" y2="40" transform={`rotate(45 25 25)`} style={{strokeWidth: "2px", stroke: "#FFF"}}></line>
+                    <line x1="25" y1="10" x2="25" y2="40" transform={`rotate(315 25 25)`} style={{strokeWidth: "2px", stroke: "#FFF"}}></line>
+                </g>
+            </svg>
+        </div>
     )
 }
