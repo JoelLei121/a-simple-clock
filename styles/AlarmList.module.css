@@ -31,20 +31,49 @@
 }
 
 
+/* alarm item */
 .AlarmItem {
     position: relative;
     width: 100%;
+    background-color: red;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.AlarmItem input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.DeleteSvgButton {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    /* cursor: pointer; */
+}
+
+.alarmSlider {
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    padding: 8px 0;
+    flex: 1;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 8px 0;
+    background-color: white;
     border-bottom: black solid 1px;
+    -webkit-transition: .4s;
+    transition: .4s;
 }
 
-.AlarmItem title {
-    font-size: 24px;
+input:checked + .alarmSlider {
+    width: 80%;
 }
-
 
 
 .toggleSwitch {
@@ -97,3 +126,4 @@ input:checked + .slider:before {
     -ms-transform: translateX(26px);
     transform: translateX(26px);
 }
+

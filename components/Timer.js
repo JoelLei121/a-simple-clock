@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/Timer.module.css";
-import ControlClock from "./utils/CombinedClock";
-import Alarm from "./utils/Alarm";
+import ControlClock from "./utils/ControlClock";
+import Alarm, { AlarmAudio } from "./utils/Alarm";
 
 
 var intervalId = null;
-export default function Timer({ scale=1 }) {
+export default function Timer({ scale=1, url="http://streaming.tdiradio.com:8000/house.mp3" }) {
     const [status, setStatue] = useState('stopped'); //['stopped', 'running', 'suspended', 'alarm']
     const [counting, setCounting] = useState(0);
     const [alarmOff, setAlarmOff] = useState(true); //alarm never work or has been closed
@@ -67,7 +67,7 @@ export default function Timer({ scale=1 }) {
     return (
         <div className={styles.Timer}>
             {
-                status === 'alarm' && <Alarm url="http://streaming.tdiradio.com:8000/house.mp3" status={status}/>
+                status === 'alarm' && <AlarmAudio url={url}/>
             }
             <ControlClock time={time} scale={scale}/>
             <ButtonSet status={status} methods={

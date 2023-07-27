@@ -2,9 +2,9 @@ import BasicClock from "../components/utils/BasicClock";
 import AutoClock from "../components/utils/AutoClock";
 import FloatingButton from "../components/FloatingButton";
 import AlarmList from "../components/AlarmList";
+import Alarm from "../components/utils/Alarm";
 
-
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CurrentStateContext, CurrentTimeContext } from "../contexts/GlobalContext";
 import DigitalClock from "../components/DigitalClock";
 import StopWatch from "../components/StopWatch";
@@ -17,6 +17,8 @@ export default function HomePage() {
 
     const timeContext = useContext(CurrentTimeContext);
     const initTime = timeContext.currentTime;
+
+    const [alarmActivated, setAlarmActivated] = useState(false);
 
     const mainClockScale = currentState === 'NORMAL' ? 2 : 0.5;
     const mainClockPosition = currentState === 'NORMAL' ? 
@@ -42,10 +44,16 @@ export default function HomePage() {
                     currentState === 'TIMER' &&
                     <Timer scale={2}/>
                 }
+
+                
                 
             </div>
             <FloatingButton style={{right: '24px', bottom: '24px'}} />
-            <AlarmList />
+            <AlarmList alarmActivated={alarmActivated} setAlarmActivated={setAlarmActivated}/>
+            {/* Alarm */}
+            {
+                alarmActivated && <Alarm url={"/audios/test.mp3"} setAlarmActivated={setAlarmActivated}/>
+            }
         </>
     )
 }
