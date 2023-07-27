@@ -73,7 +73,7 @@ export default function AlarmList({ alarmActivated, setAlarmActivated }) {
         setAlarmDataList(l => [
             ...l, 
             {
-                time: {...time},
+                time: {hour:Math.floor(time.hour), minute:Math.floor(time.minute), second:0},
                 title: 'title',
                 enabled: true
             }
