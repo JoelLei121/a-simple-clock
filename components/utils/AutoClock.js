@@ -60,7 +60,7 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
             <div style={{display: "flex", flexDirection: "column", alignItems: "center", filter: showChange?"blur(10px)":"none"}} 
                 onClick={(currentState=="NORMAL")?()=>{modify?setModify(false):setModify(true)}:()=>{}}>
                 
-                <BasicClock time={stampToTime(timeStamp)} scale={scale}/>
+                <RomanClock time={stampToTime(timeStamp)} scale={scale}/>
                 {
                     modify && <button style={{height:"30px",width:"160px",fontSize:"medium",borderRadius:"5px",backgroundColor:"#00d5ff",margin:"0 0 10px 0",color:"#ffffff",borderStyle:"none"}} 
                         onClick={()=>{setShowChange(true);setModify(false)}}>修改时间</button>
