@@ -1,5 +1,4 @@
 import BasicClock from "./BasicClock";
-import ReverseClock from "./ReverseClock";
 import DigitalClock from "../DigitalClock";
 
 export default function CombinedClock({ 

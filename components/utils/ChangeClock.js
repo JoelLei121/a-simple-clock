@@ -1,9 +1,10 @@
 import { useEffect,useState } from "react";
 import DigitalClock from "../DigitalClock";
 import styles from "../../styles/ChangeClock.module.css";
+import BasicClock from "./BasicClock";
 
 
-export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=1 ,confirmTime, cancel}) {
+export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=1, confirmTime, cancel}) {
     const [time, setTime] = useState(initTime);
     const [dragging, setDragging] = useState(false);
     const [target, setTarget] = useState(0);
@@ -66,46 +67,28 @@ export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=
     }
     
     return (
-        <div style={{width: `${200*scale}px`, height: `${200*scale}px` }} 
-          onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={stopDragging} onMouseLeave={stopDragging}>
-            <svg width='100%' height='100%' viewBox="0 0 200 200" >
-                <g>
-                    <circle id="circle" style={{stroke: "#FFF", strokeWidth: "12px", fill:"#20B7AF"}} cx="100" cy="100" r="80"></circle>
-                </g>
-                <g>
-                    <line x1="100" y1="100" x2="100" y2="55" transform={`rotate(${time.hour%12*30} 100 100)`} style={{strokeWidth: "3px", stroke: "#fffbf9"}} id="hourhand">
-                    </line>
-                    <line x1="100" y1="100" x2="100" y2="40" transform={`rotate(${time.minute*6} 100 100)`} style={{strokeWidth: "4px", stroke: "#fdfdfd"}} id="minutehand">
-                    </line>
-                    <line x1="100" y1="100" x2="100" y2="30" transform={`rotate(${time.second*6} 100 100)`} style={{strokeWidth: "2px", stroke: "#C1EFED"}} id="secondhand">
-                    </line>
-                </g>
-                <circle id="center" style={{fill:"#128A86", stroke: "#C1EFED", strokeWidth: "2px"}} cx="100" cy="100" r="3"></circle>
-
-                <g>
-                    { [...Array(12).keys()].map(i => decoration(i)) }
-                </g>
-            </svg>
+        <div onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={stopDragging} onMouseLeave={stopDragging}>
+          <BasicClock time={time} scale={scale}/>
             <div style={{display:"flex", flexDirection:"column",alignContent:"center",alignItems:"center"}}>
-              <DigitalClock time={time} scale={scale}/>
-              <div>
-                <input className={styles.input} type="number" min="0" max="23" step="1" value={Math.floor(time.hour)} 
-                  onChange={(e)=>{setTime({...time,hour:Number(e.target.value)})}
-                } />
-                <span>:</span>
-                <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.minute)} 
-                  onChange={(e)=>{setTime({...time,minute:Number(e.target.value)})}
-                } />
-                <span>:</span>
-                <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.second)} 
-                  onChange={(e)=>{setTime({...time,second:Number(e.target.value)})}
-                } />
-              </div>
-              <div style={{justifyItems:"center"}}>
-                <button className={styles.button} style={{backgroundColor:"#3aac3c"}} onClick={()=>confirmTime(time)}>确认修改</button>
-                <button className={styles.button} style={{backgroundColor:"#c9295e"}} onClick={()=>cancel()}>取消</button>
-              </div>
+            <DigitalClock time={time} scale={scale}/>
+            <div>
+              <input className={styles.input} type="number" min="0" max="23" step="1" value={Math.floor(time.hour)} 
+                onChange={(e)=>{setTime({...time,hour:Number(e.target.value)})}
+              } />
+              <span>:</span>
+              <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.minute)} 
+                onChange={(e)=>{setTime({...time,minute:Number(e.target.value)})}
+              } />
+              <span>:</span>
+              <input className={styles.input} type="number" min="0" max="59" step="1" value={Math.floor(time.second)} 
+                onChange={(e)=>{setTime({...time,second:Number(e.target.value)})}
+              } />
             </div>
+            <div style={{justifyItems:"center"}}>
+              <button className={styles.button} style={{backgroundColor:"#3aac3c"}} onClick={()=>confirmTime(time)}>确认修改</button>
+              <button className={styles.button} style={{backgroundColor:"#c9295e"}} onClick={()=>cancel()}>取消</button>
+            </div>
+          </div>
         </div>
     )
 }

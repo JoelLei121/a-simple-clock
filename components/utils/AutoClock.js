@@ -6,9 +6,10 @@ import {stampToTime,timeToStamp} from "./functions"
 
 import { CurrentTimeContext } from "../../contexts/GlobalContext";
 import { CurrentStateContext } from "../../contexts/GlobalContext";
+import styles from "../../styles/AutoClock.module.css";
 
 var intervalId;
-export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0, second: 0}, scale=1 }) {
+export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0, second: 0}, scale=1, positionStyle }) {
     const initStamp=useRef(timeToStamp(initTime))
     const stakeStamp=useRef(Math.floor(performance.now()))
     const [timeStamp, setTimeStamp] = useState(0);
@@ -56,7 +57,7 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
 
     return (
         <>
-            <div style={{display: "flex", flexDirection: "column", alignItems: "center", filter: showChange?"blur(10px)":"none"}} 
+            <div style={{...positionStyle, display: "flex", flexDirection: "column", alignItems: "center"}} 
                 onClick={(currentState=="NORMAL")?()=>{modify?setModify(false):setModify(true)}:()=>{}}>
                 
                 <BasicClock time={stampToTime(timeStamp)} scale={scale}/>
@@ -68,7 +69,7 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
             </div>
             {
                 showChange && 
-                <div style={{ position:"fixed" ,left:"0",top:"0"}}>
+                <div className={styles.changeClock}>
                     <ChangeClock initTime={stampToTime(timeStamp)} scale={scale} confirmTime={handleConfirm} cancel={handleCancel} />
                 </div>
             }

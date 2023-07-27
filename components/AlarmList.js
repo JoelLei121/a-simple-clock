@@ -62,8 +62,8 @@ export default function AlarmList({ alarmActivated, setAlarmActivated }) {
     
     /* add alarm */
     function handleAddAlarm() {
-        // setModifying(true);
-        handleConfirm(mockAlarmData.time)
+        setModifying(true);
+        // handleConfirm(currentTime);
     }
     function handleCancel() {
         setModifying(false);
@@ -114,7 +114,7 @@ export default function AlarmList({ alarmActivated, setAlarmActivated }) {
             </div>
             {
                 modifying &&
-                <div style={{position: "fixed", top: 0, left: 0}}>
+                <div className={styles.changeClock}>
                     <ChangeClock initTime={currentTime} scale={2} confirmTime={handleConfirm} cancel={handleCancel}/>
                 </div>
             }
