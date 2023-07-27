@@ -23,9 +23,11 @@ export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=
     useEffect(()=>{
       let chg=document.getElementById("changeClock")
       let circle=chg.querySelector("#circle")
-      let rect=circle.getBoundingClientRect()
-      center.current.x=(rect.left+rect.right)/2
-      center.current.y=(rect.top+rect.bottom)/2
+      if (circle) {
+        let rect = circle.getBoundingClientRect();
+        center.current.x = (rect.left + rect.right) / 2;
+        center.current.y = (rect.top + rect.bottom) / 2;
+      }
     },[])
 
     function handleMouseDown(ev){

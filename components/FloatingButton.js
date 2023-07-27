@@ -45,7 +45,7 @@ export default function FloatingButton({ style, handleStopWatch, handleTimer }) 
             <Button style={{ right: '3%', bottom: '50%', visibility: (expand ? "visible" : "hidden") , backgroundColor: '#20B7AF', cursor: 'pointer',border: "none"}} title="Stop Watch" onClick={() => switchState('STOPWATCH')} />
             <Button style={{ right: '3%', bottom: '80%', visibility: (expand ? "visible" : "hidden") , backgroundColor: '#20B7AF', cursor: 'pointer',border: "none"}} title="Timer" onClick={() => switchState('TIMER')} />
             <Button style={{ right: '3%', bottom: '110%', visibility: (expand ? "visible" : "hidden") , backgroundColor: '#20B7AF', cursor: 'pointer',border: "none"}} title="Normal" onClick={() => switchState('NORMAL')} />
-            <Button style={{ right: "50%", bottom: "10%", visibility: (expand && (currentState === 'NORMAL') ? "visible" : "hidden") , backgroundColor: '#20B7AF', cursor: 'pointer',border: "none"}} title="Change Style" onClick={handleChangeStyle} />
+            <Button style={{ right: "50%", bottom: "10%", visibility: (expand ? "visible" : "hidden") , backgroundColor: '#20B7AF', cursor: 'pointer',border: "none"}} title="Change Style" onClick={handleChangeStyle} />
 
             {/* 显示样式按钮 */}
             
