@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/Timer.module.css";
-import ControlClock from "./utils/ControlClock";
+import CombinedClock from "./utils/CombinedClock";
 import Alarm, { AlarmAudio } from "./utils/Alarm";
 
 
@@ -69,7 +69,7 @@ export default function Timer({ scale=1, url="http://streaming.tdiradio.com:8000
             {
                 status === 'alarm' && <AlarmAudio url={url}/>
             }
-            <ControlClock time={time} scale={scale}/>
+            <CombinedClock time={time} scale={scale}/>
             <ButtonSet status={status} methods={
                 {start: handleStart, stop: handleStop, continue: handleContinue, suspend: handleSuspend, stopAlarm: handleStopAlarm}
             }/>

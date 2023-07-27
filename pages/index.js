@@ -1,4 +1,3 @@
-import BasicClock from "../components/utils/BasicClock";
 import AutoClock from "../components/utils/AutoClock";
 import FloatingButton from "../components/FloatingButton";
 import AlarmList from "../components/AlarmList";
@@ -6,7 +5,6 @@ import Alarm from "../components/utils/Alarm";
 
 import { useContext, useState } from "react";
 import { CurrentStateContext, CurrentTimeContext } from "../contexts/GlobalContext";
-import DigitalClock from "../components/DigitalClock";
 import StopWatch from "../components/StopWatch";
 import Timer from "../components/Timer";
 

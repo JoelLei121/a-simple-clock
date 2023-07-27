@@ -23,7 +23,7 @@ export default function Alarm({ url, setAlarmActivated }) {
     return (
         <div className={styles.Alarm} onClick={handleClick}>
             <h1>IT'S TIME!</h1>
-            <BasicClock props={{time: {...time, second: 0}, scale: 2}}/>
+            <BasicClock time={{...time, second: 0}} scale={2}/>
             <span style={{fontSize: "24px"}}>{title}</span>
             <AlarmAudio url={url}/>
         </div>

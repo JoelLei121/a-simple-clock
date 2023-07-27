@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import BasicClock from "./BasicClock";
-import ReverseClock from "./ReverseClock";
 import ChangeClock from "./ChangeClock";
 import DigitalClock from "../DigitalClock";
 import {stampToTime,timeToStamp} from "./functions"
@@ -59,20 +58,19 @@ export default function AutoClock({ reverse=false, initTime={ hour: 0, minute: 0
         <>
             <div style={{display: "flex", flexDirection: "column", alignItems: "center", filter: showChange?"blur(10px)":"none"}} 
                 onClick={(currentState=="NORMAL")?()=>{modify?setModify(false):setModify(true)}:()=>{}}>
-                { 
-                    // reverse ? 
-                    // <ReverseClock props={{time: time, scale: scale}}/> : 
-                    <BasicClock time={stampToTime(timeStamp)} scale={scale}/>
-                }{
+                
+                <BasicClock time={stampToTime(timeStamp)} scale={scale}/>
+                {
                     modify && <button style={{height:"30px",width:"160px",fontSize:"medium",borderRadius:"5px",backgroundColor:"#00d5ff",margin:"0 0 10px 0",color:"#ffffff",borderStyle:"none"}} 
                         onClick={()=>{setShowChange(true);setModify(false)}}>修改时间</button>
                 }
                 <DigitalClock time={currentTime} scale={scale}/>
             </div>
             {
-                showChange&&<div style={{ position:"fixed" ,left:"0",top:"0"}}>
+                showChange && 
+                <div style={{ position:"fixed" ,left:"0",top:"0"}}>
                     <ChangeClock initTime={stampToTime(timeStamp)} scale={scale} confirmTime={handleConfirm} cancel={handleCancel} />
-                    </div>
+                </div>
             }
 
         </>

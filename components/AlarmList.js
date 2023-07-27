@@ -115,7 +115,7 @@ export default function AlarmList({ alarmActivated, setAlarmActivated }) {
             {
                 modifying &&
                 <div style={{position: "fixed", top: 0, left: 0}}>
-                    <ChangeClock initTime={currentTime} scale={2} handleConfirm={handleConfirm} handleCancel={handleCancel}/>
+                    <ChangeClock initTime={currentTime} scale={2} confirmTime={handleConfirm} cancel={handleCancel}/>
                 </div>
             }
         </>

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import styles from "../styles/StopWatch.module.css";
-import ControlClock from "./utils/CombinedClock";
+import CombinedClock from "./utils/CombinedClock";
 import { stampToTime,timeToStamp } from "./utils/functions";    
 
 var intervalId = null;
@@ -67,7 +67,7 @@ export default function StopWatch({ scale=1 }) {
 
     return (
         <div className={styles.StopWatch}>
-            <ControlClock time={stampToTime(timeStamp)} scale={scale}/>
+            <CombinedClock time={stampToTime(timeStamp)} scale={scale}/>
             <ButtonSet status={status} methods={
                 {start: handleStart, stop: handleStop, continue: handleContinue, reset: handleReset, record: handleRecord}
             }/>
