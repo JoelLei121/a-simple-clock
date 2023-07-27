@@ -45,7 +45,6 @@ export default function Timer({ scale=1, url="/audios/test.mp3" }) {
     }, [timeStamp])
 
     function handleStart() {
-        /* TODO: set timer with clock or digital clock */
         setAlarmOff(false);
         setStatue('running');
     }
@@ -93,7 +92,7 @@ export default function Timer({ scale=1, url="/audios/test.mp3" }) {
                     modify && <button style={{height:"30px",width:"160px",fontSize:"medium",borderRadius:"5px",backgroundColor:"#00d5ff",margin:"0 0 10px 0",color:"#ffffff",borderStyle:"none"}} 
                         onClick={()=>{setShowChange(true);setModify(false)}}>修改时间</button>
                 }
-                <ButtonSet status={status} methods={
+                <ButtonSet status={status} timeStamp={timeStamp} methods={
                     {start: handleStart, stop: handleStop, continue: handleContinue, suspend: handleSuspend, stopAlarm: handleStopAlarm}
                 }/>
             </div>
@@ -109,11 +108,15 @@ export default function Timer({ scale=1, url="/audios/test.mp3" }) {
 
 
 
-function ButtonSet({status, methods}) {
+function ButtonSet({status, timeStamp, methods}) {
     return (
         <div className={styles.buttonList}>
             {
-                status === 'stopped' && 
+                (status === 'stopped') && (timeStamp < 1000) &&
+                <button className={styles.forbiddenButton} onClick={()=>{}}>Set Time To Start</button>
+            }
+            {
+                (status === 'stopped') && (timeStamp >= 1000) &&
                 <button className={styles.button} onClick={methods.start}>Start</button>
             }
             {
