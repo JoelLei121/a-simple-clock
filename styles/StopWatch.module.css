@@ -11,16 +11,33 @@
 .buttonList {
     display: flex;
     flex-direction: row;
-    width: 250px;
+    width: 320px;
     height: auto;
 }
 
 .button{
     flex: 1;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
     height: 50px;
     min-width: 70px;
+    
+    border-radius: 20px;
+    color: whitesmoke;
+    background-color: skyblue;
+    border-width: 0;
+    cursor: pointer;
+    font-size: 20px;
+    transition-duration: 0.3s;
+}
+
+.button:hover{
+    background-color: aqua;
+}
+
+.button:active{
+    background-color: deepskyblue;
+    opacity: 0.5;
 }
 
 .recordList {
@@ -29,13 +46,22 @@
     overflow-y: scroll;
 
     margin-top: 16px;
-    width: 250px;
+    width: 300px;
     height: 100px;
     background-color: rgba(238, 237, 237, 0.3);
+
+    border-radius: 12px;
 }
 
 .record {
     display: flex;
     justify-content: space-between;
-    border-bottom: black solid 1px;
+    border-bottom: gray dashed 2px;
+
+    color: grey;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 6px;
 }
+
+

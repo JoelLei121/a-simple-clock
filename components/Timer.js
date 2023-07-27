@@ -5,7 +5,7 @@ import Alarm, { AlarmAudio } from "./utils/Alarm";
 
 
 var intervalId = null;
-export default function Timer({ scale=1, url="http://streaming.tdiradio.com:8000/house.mp3" }) {
+export default function Timer({ scale=1, url="/audios/test.mp3" }) {
     const [status, setStatue] = useState('stopped'); //['stopped', 'running', 'suspended', 'alarm']
     const [counting, setCounting] = useState(0);
     const [alarmOff, setAlarmOff] = useState(true); //alarm never work or has been closed

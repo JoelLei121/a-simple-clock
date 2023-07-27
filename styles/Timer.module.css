@@ -11,14 +11,31 @@
 .buttonList {
     display: flex;
     flex-direction: row;
-    width: 250px;
+    width: 340px;
     height: auto;
 }
 
 .button{
     flex: 1;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-left: 20px;
+    margin-right: 20px;
     height: 50px;
     min-width: 70px;
+    
+    border-radius: 20px;
+    color: whitesmoke;
+    background-color: skyblue;
+    border-width: 0;
+    cursor: pointer;
+    font-size: 20px;
+    transition-duration: 0.3s;
+}
+
+.button:hover{
+    background-color: aqua;
+}
+
+.button:active{
+    background-color: deepskyblue;
+    opacity: 0.5;
 }

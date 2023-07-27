@@ -1,8 +1,23 @@
 .button {
     position: absolute;
-    border-radius: 10px;
     width: 70px;
     height: 40px;
-    background-color: #0D1282;
-    color: #EEEDED;
+    
+    border-radius: 10px;
+    color: whitesmoke;
+    background-color: skyblue;
+    border-width: 0;
+    cursor: pointer;
+    font-size: 16px;
+    transition-duration: 0.3s;
+    opacity: 0.8;
+}
+
+.button:hover{
+    background-color: aqua;
+}
+
+.button:active{
+    background-color: deepskyblue;
+    opacity: 0.4;
 }

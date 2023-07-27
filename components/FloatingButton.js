@@ -20,8 +20,7 @@ export default function FloatingButton({style, handleStopWatch, handleTimer}) {
         <div style={{...style, position: "absolute", zIndex: 2, width: radius*5, height: radius*5}}>
             <svg width={radius*2} height={radius*2} style={{ position: "absolute", right: 0, bottom: 0 }} onClick={handleExpand}>        
                 <g>
-                    {/* <circle id="shadow" style={{fill:"rgba(0,0,0,0.1)"}} cx="97" cy="100" r="87" filter="url(#innerShadow)"></circle> */}
-                    <circle id="circle" style={{fill:"#D71313"}} cx={radius} cy={radius} r={radius}></circle>
+                    <circle id="circle" style={{fill:"#006400"}} cx={radius} cy={radius} r={radius} fillOpacity={0.4}></circle>
                 </g>
                 <g>
                     <line x1={radius} y1={radius * 1.5} x2={radius} y2={radius * 0.5} style={{strokeWidth: "3px", stroke: "#F0DE36"}}></line>
