@@ -42,7 +42,7 @@ export default function FloatingButton({ style, handleStopWatch, handleTimer }) 
                 </g>
             </svg>
             <div >
-            <Button style={{ right: '3%', bottom: '50%', visibility: (expand ? "visible" : "hidden") , backgroundColor: '#20B7AF', cursor: 'pointer',border: "none"}} title="Stop Watch" onClick={() => switchState('STPWATCH')} />
+            <Button style={{ right: '3%', bottom: '50%', visibility: (expand ? "visible" : "hidden") , backgroundColor: '#20B7AF', cursor: 'pointer',border: "none"}} title="Stop Watch" onClick={() => switchState('STOPWATCH')} />
             <Button style={{ right: '3%', bottom: '80%', visibility: (expand ? "visible" : "hidden") , backgroundColor: '#20B7AF', cursor: 'pointer',border: "none"}} title="Timer" onClick={() => switchState('TIMER')} />
             <Button style={{ right: '3%', bottom: '110%', visibility: (expand ? "visible" : "hidden") , backgroundColor: '#20B7AF', cursor: 'pointer',border: "none"}} title="Normal" onClick={() => switchState('NORMAL')} />
             <Button style={{ right: "50%", bottom: "10%", visibility: (expand && (currentState === 'NORMAL') ? "visible" : "hidden") , backgroundColor: '#20B7AF', cursor: 'pointer',border: "none"}} title="Change Style" onClick={handleChangeStyle} />
@@ -50,8 +50,8 @@ export default function FloatingButton({ style, handleStopWatch, handleTimer }) 
             {/* 显示样式按钮 */}
             
                 <Button style={{ right: '50%', bottom: '35%', visibility: (showChangeStyle ? "visible" : "hidden"), borderRadius: "50%" , backgroundColor: 'gray', cursor: 'pointer',border: "none"}} title="Basic" onClick={() => switchStyle("BASIC")} />
-                <Button style={{ right: '90%', bottom: '35%', visibility: (showChangeStyle ? "visible" : "hidden"), borderRadius: "50%" , backgroundColor: 'gray', cursor: 'pointer',border: "none"}} title="Roman" onClick={() => switchStyle("ROMAN")} />
-                <Button style={{ right: '90%', bottom: '10%', visibility: (showChangeStyle ? "visible" : "hidden"), borderRadius: "50%" , backgroundColor: 'gray', cursor: 'pointer',border: "none"}} title="Plate" onClick={() => switchStyle("PLATE")} />
+                <Button style={{ right: '50%', bottom: '60%', visibility: (showChangeStyle ? "visible" : "hidden"), borderRadius: "50%" , backgroundColor: 'gray', cursor: 'pointer',border: "none"}} title="Roman" onClick={() => switchStyle("ROMAN")} />
+                <Button style={{ right: '50%', bottom: '85%', visibility: (showChangeStyle ? "visible" : "hidden"), borderRadius: "50%" , backgroundColor: 'gray', cursor: 'pointer',border: "none"}} title="Plate" onClick={() => switchStyle("PLATE")} />
             </div>
 
 
