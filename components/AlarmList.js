@@ -151,7 +151,7 @@ function AlarmItem({ index, time={ hour: 0, minute: 0, second: 0 }, title="title
                     <p style={{fontSize: "28px"}}>{
                     `${String(time.hour).padStart(2, '0')}:${String(time.minute).padStart(2, '0')}`
                     }</p>
-                    <p style={{fontSize: "20px"}}>{title}</p>
+                    <p style={{fontSize: "20px", width:"140px",overflowX:"hidden"}}>{title}</p >
                 </div>
                 <ToggleSwitch value={enabled} setValue={setEnabled}/>
             </label>
