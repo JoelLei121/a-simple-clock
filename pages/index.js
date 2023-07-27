@@ -23,6 +23,7 @@ export default function HomePage() {
         {position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"} : 
         {position: "absolute", right: "60px", top: "40px"};
 
+
     return (
         <>
             <div style={{width: "100%", height: "100%"}}>
