@@ -40,7 +40,7 @@ export default function HomePage() {
                 {/* timer */}
                 {
                     currentState === 'TIMER' &&
-                    <Timer scale={2}/>
+                    <Timer scale={2} alarmActivated={alarmActivated}/>
                 } 
             </div>
             <FloatingButton style={{right: '24px', bottom: '24px'}} />

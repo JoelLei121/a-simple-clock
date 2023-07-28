@@ -7,7 +7,7 @@ import ChangeClock from "./utils/ChangeClock";
 
 
 var intervalId = null;
-export default function Timer({ scale=1, url="/audios/test.mp3" }) {
+export default function Timer({ scale=1, url="/audios/test.mp3", alarmActivated=false }) {
     const [status, setStatue] = useState('stopped'); //['stopped', 'running', 'suspended', 'alarm']
     const [alarmOff, setAlarmOff] = useState(true); //alarm never work or has been closed
     const [showChange, setShowChange] = useState(false);
@@ -80,7 +80,7 @@ export default function Timer({ scale=1, url="/audios/test.mp3" }) {
         <>
             <div className={styles.Timer}>
                 {
-                    status === 'alarm' && <AlarmAudio url={url}/>
+                    (status === 'alarm' && !alarmActivated) && <AlarmAudio url={url}/>
                 }
                 <div onClick={()=>{setShowChange(true)}}>
                     <CombinedClock time={stampToTime(timeStamp)} scale={scale}/>
