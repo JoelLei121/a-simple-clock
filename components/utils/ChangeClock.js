@@ -10,6 +10,8 @@ export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=
 
   //test
     const center=useRef({x:0,y:0})
+    const overLoop=useRef(false)
+    const prevAngle=useRef(0)
     const [time, setTime] = useState(initTime);
     const [dragging, setDragging] = useState(false);
     const [target, setTarget] = useState(0);
@@ -56,7 +58,10 @@ export default function ChangeClock({initTime={hour:0,minute:0,second:0}, scale=
           setTime({...time,minute:angle/6})
         }
         else if(target==Hand.hour){
-          setTime({...time,hour:angle/30})
+          if(prevAngle.current-angle>300 || prevAngle.current-angle<-300) overLoop.current=!overLoop.current
+          let loop=overLoop.current?12:0
+          prevAngle.current=angle
+          setTime({...time,hour:angle/30+loop})
         }
       }
     }
