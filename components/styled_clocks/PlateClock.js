@@ -1,21 +1,16 @@
-import { useEffect } from "react";
-
 export default function PlateClock({ time = { hour: 0, minute: 0, second: 0 }, scale = 1 }) {
-
     return (
         <div style={{ width: `${200 * scale}px`, height: `${200 * scale}px` }}>
             <svg width='100%' height='100%' viewBox="0 0 200 200" >
+                {/* clock plate shadow*/}
                 <defs>
-                    <radialGradient id="shadowGradient" >
+                    <radialGradient id="shadowGradient">
                         <stop offset="90%" stop-color="black" stop-opacity="0" />
                         <stop offset="100%" stop-color="black" stop-opacity="0.5" />
                     </radialGradient>
                 </defs>
-                {/* 秒针表盘 */}
-                <g transform={`rotate(${-time.second * 6} 100 100)`} style={{
-                    fontFamily: 'BenchNine, sans-serif',
-                    fontSize: '5px',
-                }}>
+                {/* secondhand plate*/}
+                <g id="secondhand" transform={`rotate(${-time.second * 6} 100 100)`} style={{ fontFamily: 'BenchNine, sans-serif', fontSize: '5px' }} >
                     <circle cx="100" cy="100" r="95" stroke="black" stroke-width="10" fill="none" />
                     <circle cx="100" cy="100" r="95" fill="white" />
                     <circle cx="100" cy="100" r="95" fill="url(#shadowGradient)" />
@@ -80,11 +75,8 @@ export default function PlateClock({ time = { hour: 0, minute: 0, second: 0 }, s
                     <text x="180" y="103" style={{ transform: "rotate(348deg)", transformOrigin: "100px 100px" }}>58</text>
                     <text x="180" y="103" style={{ transform: "rotate(354deg)", transformOrigin: "100px 100px" }}>59</text>
                 </g>
-                {/* 分针表盘 */}
-                <g transform={`rotate(${-time.minute * 6} 100 100)`} style={{
-                    fontFamily: 'BenchNine, sans-serif',
-                    fontSize: '6px',
-                }}>
+                {/* minutehand plate */}
+                <g id="minutehand" transform={`rotate(${-time.minute * 6} 100 100)`} style={{ fontFamily: 'BenchNine, sans-serif', fontSize: '6px' }}>
                     <circle cx="100" cy="100" r="75" fill="black" />
                     <text x="161.8" y="102" style={{ transform: "rotate(0deg)", transformOrigin: "100px 100px", fill: "white" }}>0</text>
                     <text x="161.8" y="102" style={{ transform: "rotate(6deg)", transformOrigin: "100px 100px", fill: "white" }}>1</text>
@@ -148,11 +140,8 @@ export default function PlateClock({ time = { hour: 0, minute: 0, second: 0 }, s
                     <text x="160" y="102" style={{ transform: "rotate(354deg)", transformOrigin: "100px 100px", fill: "white" }}>59</text>
 
                 </g>
-                {/* 时针表盘 */}
-                <g transform={`rotate(${-time.hour % 12 * 30} 100 100)`} style={{
-                    fontFamily: 'BenchNine, sans-serif',
-                    fontSize: '12px',
-                }}>
+                {/* hourhand plate */}
+                <g id="hourhand" transform={`rotate(${-time.hour % 12 * 30} 100 100)`} style={{ fontFamily: 'BenchNine, sans-serif', fontSize: '12px' }}>
                     <circle cx="100" cy="100" r="55" fill="white" />
                     <circle cx="100" cy="100" r="55" fill="url(#shadowGradient)" />
                     <text x="135" y="105" style={{ transform: "rotate(0deg)", transformOrigin: "100px 100px" }}>12</text>
@@ -168,11 +157,11 @@ export default function PlateClock({ time = { hour: 0, minute: 0, second: 0 }, s
                     <text x="135" y="105" style={{ transform: "rotate(300deg)", transformOrigin: "100px 100px" }}>10</text>
                     <text x="135" y="105" style={{ transform: "rotate(330deg)", transformOrigin: "100px 100px" }}>11</text>
                 </g>
-                {/* 指针 */}
-                <g>
-                    <circle style={{ fill: "#ff0000" }} cx="100" cy="100" r="2"></circle>
-                    <line x1="100" y1="100" x2="195" y2="100" style={{ strokeWidth: "0.3px", stroke: "#ff0000" }}></line>
-                    <circle style={{ fill: "#ff0000" }} cx="197.5" cy="100" r="2.5"></circle>
+                {/* center */}
+                <g id="circle">
+                    <circle style={{ fill: "#ff0000" }} cx="100" cy="100" r="2" />
+                    <line x1="100" y1="100" x2="195" y2="100" style={{ strokeWidth: "0.3px", stroke: "#ff0000" }} />
+                    <circle style={{ fill: "#ff0000" }} cx="197.5" cy="100" r="2.5" />
                 </g>
             </svg>
         </div>

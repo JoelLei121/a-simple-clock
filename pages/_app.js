@@ -1,6 +1,6 @@
-import '../styles/global.css';
 import { CurrentStateContext,CurrentStyleContext, CurrentTimeContext, AlarmTimeContext } from '../contexts/GlobalContext';
 import { useState } from 'react';
+import '../styles/global.css';
 
 export default function App({ Component, pageProps}) {
     const [currentState, setCurrentState] = useState('NORMAL');
@@ -14,11 +14,6 @@ export default function App({ Component, pageProps}) {
         second: d.getSeconds()
     }
 
-    // let initTime = {
-    //     hour: 0,
-    //     minute: 0,
-    //     second: 0
-    // }
     const [currentTime, setCurrentTime] = useState(initTime);
     const [alarmTime, setAlarmTime] = useState(initTime);
     const [alarmTitle, setAlarmTitle] = useState("");

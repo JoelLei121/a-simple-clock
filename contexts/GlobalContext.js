@@ -6,13 +6,11 @@ export const CurrentTimeContext = createContext({
     setCurrentTime: () => {} 
 }); 
 
-
 /* current functioning state: NORMAL, STOPWATCH, TIMER */
 export const CurrentStateContext = createContext('NORMAL');
 
 /* current clock style: BASIC, ROMAN, PLATE */
 export const CurrentStyleContext = createContext('BASIC');
-
 
 /* alarm time controller, use for setting alarm. { time, setTime,  } */
 export const AlarmTimeContext = createContext({

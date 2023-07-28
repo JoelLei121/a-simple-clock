@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
-import styles from "../../styles/Alarm.module.css";
+import React, {useEffect, useContext } from "react";
 import { CurrentTimeContext, AlarmTimeContext } from "../../contexts/GlobalContext";
+import styles from "../../styles/Alarm.module.css";
 import BasicClock from "./BasicClock";
-
 
 export default function Alarm({ url, setAlarmActivated }) {
     const alarmContext = useContext(AlarmTimeContext);
@@ -28,7 +27,6 @@ export default function Alarm({ url, setAlarmActivated }) {
             <AlarmAudio url={url}/>
         </div>
     )
-
 };
 
 export function AlarmAudio({ url }) {
