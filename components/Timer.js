@@ -81,18 +81,19 @@ export default function Timer({ scale = 1, url = "/audios/test.mp3", alarmActiva
                 {
                     (status === 'alarm' && !alarmActivated) && <AlarmAudio url={url} />
                 }
-                <div onClick={() => { setShowChange(true) }}>
+                <div onClick={() => { if(status === 'stopped') setShowChange(true) }}>
                     <CombinedClock time={stampToTime(timeStamp)} scale={scale} />
                 </div>
                 <ButtonSet status={status} timeStamp={timeStamp} methods={
                     { start: handleStart, stop: handleStop, continue: handleContinue, suspend: handleSuspend, stopAlarm: handleStopAlarm }
                 } />
             </div>
-            {showChange && (
+            {
+                (showChange && status === 'stopped') && 
                 <div className={styles.changeClock}>
                     <ChangeClock initTime={stampToTime(timeStamp)} scale={scale} confirmTime={handleConfirm} cancel={handleCancel} />
                 </div>
-            )}
+            }
         </>
     )
 }
@@ -107,7 +108,7 @@ function ButtonSet({ status, timeStamp, methods }) {
                 <button className={styles.button} onClick={methods.start}>Start</button>
             )}
             {(status === 'running' || status === 'suspended') && (
-                <button className={styles.button} onClick={methods.stop}>Stop</button>
+                <button className={styles.button} onClick={(e) => {methods.stop(); e.stopPropagation();}}>Stop</button>
             )}
             {status === 'running' && (
                 <button className={styles.button} onClick={methods.suspend}>Suspend</button>
