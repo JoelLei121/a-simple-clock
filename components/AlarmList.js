@@ -111,7 +111,7 @@ export default function AlarmList({ alarmActivated, setAlarmActivated }) {
                         })
                     }
                 </div>
-                <button className={styles.addButton} onClick={handleAddAlarm}>+ Add Alarm</button>
+                <button className={styles.addButton} onClick={handleAddAlarm} style={{borderRadius: "5px",backgroundColor: '#20B7AF', color:'#FFFFFF',cursor: 'pointer',border: "none"}}>+ Add Alarm</button>
             </div>
             {
                 modifying &&
